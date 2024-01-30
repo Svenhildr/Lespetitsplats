@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./css/index.css" />
+        <link rel="stylesheet" href="./css/output.css" />
+        <title>Les petits plats</title>
+        <script src="https://kit.fontawesome.com/b50abd1df8.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <header>
+            <div class="logo text-3xl font-bold underline">
+                <img src="./assets/Logo.svg" alt="Logo Les petis plats" />
+            </div>
+            <div class="header_content">
+                <h1 class="header_text">
+                    CHERCHEZ PARMI PLUS DE 1500 RECETTES <br />
+                    DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES
+                </h1>
+                <div class="header_searchbar">
+                    <form>
+                        <label>search</label>
+                        <div>
+                            <input id="searchbar" placeholder="Rechercher une recette, un ingrédient, ..." />
+                            <button class="search_button" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </header>
+        <body>
+            <div class="ingredients_dropdown"><span>Ingrédients</span> <i id="dropdown-icon-down" class="fa-solid fa-chevron-down fa-chevron-up"></i></div>
+            <div class="content_dropdown">
+                <input id="searchbar_filter" />
+                <button class="search_button" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <div class="search_item"></div>
+            </div>
+        </body>
+    </body>
+</html>
