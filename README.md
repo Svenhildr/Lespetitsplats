@@ -1,6 +1,5 @@
-# 🚩 Les Petits Plats 2.0
+# 🍝 Les Petits Plats 2.0  -  Recipe Search Engine
 
-# ***Cookbook Project - Recipe Search Engine***
 
 ## **📜 Project Overview**
 After years of editing cookbooks, the company is venturing into a new project: creating its own recipe website similar to Marmiton or 750g. Sandra, the project manager, is leading the digitalization efforts, and as a freelance developer, you are tasked with implementing the recipe search functionality.
