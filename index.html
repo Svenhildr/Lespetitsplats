@@ -5,36 +5,87 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!-- <link rel="stylesheet" href="../src/css/input.css" /> -->
         <link rel="stylesheet" href="./css/output.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
         <title>Les petits plats</title>
         <script src="https://kit.fontawesome.com/b50abd1df8.js" crossorigin="anonymous"></script>
+        <script src="./data/recipes.js"></script>
+        <script src="./scripts/index.js" defer></script>
     </head>
 
-    <body class="bg-red-500">
-        <header>
-            <div class="logo">
-                <img src="./assets/Logo.svg" alt="Logo Les petis plats" />
-            </div>
-            <div class="header_content">
-                <h1 class="">
-                    CHERCHEZ PARMI PLUS DE 1500 RECETTES <br />
-                    DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES
-                </h1>
-                <div class="header_searchbar">
-                    <form>
-                        <!-- <label for="searchbar">Rechercher</label> -->
-                        <div>
-                            <input id="searchbar" placeholder="Rechercher une recette, un ingrédient, ..." />
-                            <button class="search_button" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        </div>
-                    </form>
+    <body class="font-['Manrope'] bg-light-grey">
+        <header class="relative mt-0">
+            <!-- Image de fond -->
+            <div class="background_image absolute top-0 left-0 w-full h-[677px] bg-cover bg-center" style="background-image: url('./assets/Header_BG.jpg')"></div>
+
+            <!-- Logo -->
+            <div class="header_container absolute top-0 h-full w-full flex flex-col">
+                <div class="logo z-10 w-full flex-row p-10 mb-1">
+                    <img src="./assets/Logo.svg" alt="Logo Les petits plats" />
+                </div>
+
+                <!-- Contenu du header -->
+                <div class="header_content w-full h-full flex flex-col items-center text-white z-10 mt-28">
+                    <h1 class="font-['Anton'] leading-relaxed w-full text-center text-5xl text-chicky-yellow tracking-wider font-bold mb-4">
+                        CHERCHEZ PARMI PLUS DE 1500 RECETTES <br />
+                        DU QUOTIDIEN, SIMPLES ET DÉLICIEUSES
+                    </h1>
+                    <div class="header_searchbar relative mt-4 w-1/2">
+                        <form class="header_form flex items-center justify-center">
+                            <input id="searchbar" class="rounded-md py-4 px-6 mr-2 w-full" placeholder="Rechercher une recette, un ingrédient, ..." />
+                            <button class="absolute right-4 py-2 px-3 rounded-md text-white bg-black hover:bg-chicky-yellow ease-in-out duration-300" type="submit">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </header>
-        <div class="ingredients_dropdown"><span>Ingrédients</span> <i id="dropdown-icon-down" class="fa-solid fa-chevron-down fa-chevron-up"></i></div>
-        <div class="content_dropdown">
-            <input id="searchbar_filter" />
-            <button class="search_button" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <div class="search_item"></div>
-        </div>
+        <main class="main_container relative z-20 top-[697px]">
+            <div class="filter-container flex flex-row flex justify-between mx-20 mb-10">
+                <div class="ingredients_dropdown rounded-md bg-white w-[195px] h-12 px-4 py-2 flex items-center justify-between">
+                    <span class="font-medium">Ingrédients</span>
+                    <i id="dropdown-icon-down" class="fa-solid fa-chevron-down fa-chevron-up pl-2"></i>
+                </div>
+                <div class="content_dropdown">
+                    <div class="filter_dropdown rounded-md pb-20 bg-white w-[195px] px-4 py-2 ml-20 flex flex-col justify-between">
+                        <span class="flex items-center justify-between pb-2 font-medium"
+                            >Ingrédients
+                            <i id="dropdown-icon-down" class="fa-solid fa-chevron-down fa-chevron-up pl-2"></i>
+                        </span>
+                        <div class="searchbar_filter_container relative rounded border-solid border border-light-grey">
+                            <input class="searchbar_input block w-full h-[36px] outline-none" />
+                            <button class="search_button absolute right-1.5 top-1 text-light-grey" type="submit">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                        <div class="search_item pt-5">test</div>
+                    </div>
+                </div>
+                <div class="recipe-number font-['Anton'] text-xl font-bold mb-4">1500 recettes</div>
+            </div>
+            <div class="card_container my-10 w-[380px] bg-white rounded-3xl overflow-hidden ml-20">
+                <div class="photo_container h-[253px] rounded-3xl mb-8 relative">
+                    <img src="./assets/Recette01.jpg" alt="" class="object-cover w-full h-full" />
+                    <span class="time_buble px-4 py-1 text-[12px] bg-chicky-yellow rounded-3xl absolute top-6 right-6">50 min</span>
+                </div>
+
+                <div class="card_info w-full px-7">
+                    <h2 class="card_title mt-7 font-['Anton'] font-extrabold text-lg mb-6">Titre de la recette</h2>
+                    <div class="recipe_content">
+                        <h3 class="recipe_title text-xs text-medium-grey font-bold mb-4">RECETTES</h3>
+                        <p class="recipe text-wrap text-[14px]">
+                            Mettre les glaçons à votre goût dans le blender, Ajouter le lait la crème de coco, le jus de 2 citrons et le sucre ensemble. Mixer jusqu'à obtenir la consistance désirée.
+                        </p>
+                    </div>
+                    <div class="ingredients_content mb-12">
+                        <h3 class="ingredients_title text-xs text-medium-grey font-bold mt-7 mb-4">INGREDIENTS</h3>
+                        <p class="ingredients_name font-semibold text-[14px]">Lait de coco</p>
+                        <p class="ingredients_quantity text-[14px] text-medium-grey">400ml</p>
+                    </div>
+                </div>
+            </div>
+        </main>
     </body>
 </html>
