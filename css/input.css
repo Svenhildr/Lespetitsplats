@@ -3,3 +3,46 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+.flex {
+    display: flex;
+}
+.justify-end {
+    justify-content: end;
+}
+
+.overflow-y-scroll {
+    overflow: scroll;
+}
+
+.scrollbar-thin {
+    scrollbar-width: thin;
+}
+
+.scrollbar-thumb {
+    scrollbar-color: white white;
+}
+
+.text-capitalize {
+    text-transform: capitalize;
+}
+
+.truncate {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.recipe {
+    max-height: 75px;
+}
+
+.tagList {
+    display: none;
+}
+
+.tagList.show {
+    display: block;
+}
