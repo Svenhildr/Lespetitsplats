@@ -29,7 +29,6 @@ function openDropdown() {
         icon.addEventListener("click", (e) => {
             const dropdownContainer = e.target.closest(".content_dropdown");
             console.log(dropdownContainer);
-            drow;
         });
     });
 }
