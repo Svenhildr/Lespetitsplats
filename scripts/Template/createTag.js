@@ -6,9 +6,9 @@
  * @return {void}
  */
 export default function createTag(tags, nameTag) {
-    let filterDropdown = document.querySelector(`#${nameTag} .filter_dropdown`);
+    let filterDropdown = document.querySelector(`#${nameTag} .filter_container`);
     let tagList = document.createElement("ul");
-    tagList.classList.add("ingredient_list", "overflow-y-scroll", "scrollbar-thin", "scrollbar-thumb", "scrollbar-track");
+    tagList.classList.add("tag_list", "h-[250px]", "overflow-y-scroll", "scrollbar-thin", "scrollbar-thumb", "scrollbar-track", "opacity-10");
 
     tags.forEach((tag) => {
         let tagElt = document.createElement("li");
