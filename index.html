@@ -42,60 +42,62 @@
                 </div>
             </div>
         </header>
+        <!-- section filtres -->
         <main class="main_container relative z-20 top-[697px]">
-            <div class="filter-container flex flex-row flex justify-start mx-20 mb-10">
-                <div class="ingredients_dropdown rounded-md bg-white w-[200px] h-12 px-4 py-2 flex items-center justify-between">
-                    <span class="font-medium">Ingrédients</span>
-                    <i class="fa-solid fa-chevron-down fa-chevron-up pl-2"></i>
-                </div>
+            <div class="filter-container flex flex-row justify-start mx-20 mb-10">
                 <div id="ingredients" class="content_dropdown">
-                    <div class="filter_dropdown rounded-md bg-white w-[210px] h-[300px] px-4 py-2 ml-10 flex flex-col justify-between">
+                    <div class="filter_dropdown fit-content rounded-md bg-white w-[210px] h-[300px] px-4 py-2 ml-10 flex flex-col justify-start">
                         <span class="flex items-center justify-between pb-2 font-medium">
                             Ingrédients
-                            <i class="dropdown-icon-down fa-solid fa-chevron-down fa-chevron-up pl-2"></i>
+                            <i class="dropdown-icon-up fa-solid fa-chevron-up pl-2"></i>
                         </span>
-                        <div class="searchbar_filter_container relative rounded border-solid border border-light-grey">
-                            <input class="searchbar_input block w-full h-[36px] outline-none" />
-                            <button class="search_button absolute right-1.5 top-1 text-light-grey" type="submit">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </button>
+                        <div class="filter_container hidden flex-col justify-between max-h-[250px]">
+                            <div class="searchbar_filter_container relative rounded border-solid border border-light-grey">
+                                <input class="searchbar_input block w-full h-[36px] outline-none" />
+                                <button class="search_button absolute right-1.5 top-1 text-light-grey" type="submit">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="search_item pt-5"></div>
                     </div>
                 </div>
 
                 <div id="appliances" class="content_dropdown">
-                    <div class="filter_dropdown rounded-md bg-white w-[210px] h-[300px] px-4 py-2 ml-10 flex flex-col justify-between">
+                    <div class="filter_dropdown fit-content rounded-md bg-white w-[210px] h-[300px] px-4 py-2 ml-10 flex flex-col justify-start">
                         <span class="flex items-center justify-between pb-2 font-medium">
                             Appareils
-                            <i class="dropdown-icon-down fa-solid fa-chevron-down fa-chevron-up pl-2"></i>
+                            <i class="dropdown-icon-up fa-solid fa-chevron-up pl-2"></i>
                         </span>
-                        <div class="searchbar_filter_container relative rounded border-solid border border-light-grey">
-                            <input class="searchbar_input block w-full h-[36px] outline-none" />
-                            <button class="search_button absolute right-1.5 top-1 text-light-grey" type="submit">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </button>
+                        <div class="filter_container hidden flex-col justify-between max-h-[250px]">
+                            <div class="searchbar_filter_container relative rounded border-solid border border-light-grey">
+                                <input class="searchbar_input block w-full h-[36px] outline-none" />
+                                <button class="search_button absolute right-1.5 top-1 text-light-grey" type="submit">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="search_item pt-5"></div>
                     </div>
                 </div>
 
                 <div id="ustensils" class="content_dropdown">
-                    <div class="filter_dropdown rounded-md bg-white w-[210px] h-[300px] px-4 py-2 ml-10 flex flex-col justify-between">
+                    <div class="filter_dropdown fit-content rounded-md bg-white w-[210px] h-[300px] px-4 py-2 ml-10 flex flex-col justify-start">
                         <span class="flex items-center justify-between pb-2 font-medium">
                             Ustensiles
-                            <i class="dropdown-icon-down fa-solid fa-chevron-down fa-chevron-up pl-2"></i>
+                            <i class="dropdown-icon-up fa-solid fa-chevron-up pl-2"></i>
                         </span>
-                        <div class="searchbar_filter_container relative rounded border-solid border border-light-grey">
-                            <input class="searchbar_input block w-full h-[36px] outline-none" />
-                            <button class="search_button absolute right-1.5 top-1 text-light-grey" type="submit">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </button>
+                        <div class="filter_container hidden flex-col justify-between max-h-[250px]">
+                            <div class="searchbar_filter_container relative rounded border-solid border border-light-grey">
+                                <input class="searchbar_input block w-full h-[36px] outline-none" />
+                                <button class="search_button absolute right-1.5 top-1 text-light-grey" type="submit">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="search_item pt-5"></div>
                     </div>
                 </div>
             </div>
+
+            <!-- section recettes cards -->
             <div class="recipe-number font-['Anton'] text-xl font-bold mb-4">1500 recettes</div>
             <div class="card_container flex flex-row flex-wrap justify-center">
                 <div class="card my-10 w-1/4 bg-white rounded-3xl overflow-hidden ml-20">
