@@ -27,37 +27,79 @@ export function generateTagList(recipes) {
 export function initTag(tags, nameTag) {
     let mainTagElt = document.querySelector(`#${nameTag}`);
     createTag(tags, nameTag);
-    closedDropdown(mainTagElt);
-    // openedDropdown(mainTagElt);
+    toggleDropdown(mainTagElt);
+    selectTag(mainTagElt);
 }
 
-function closedDropdown(mainTagElt) {
-    const dropdownIconUp = mainTagElt.querySelector(".dropdown-icon-up");
-    // console.log(dropdownIconUp);
+function toggleDropdown(mainTagElt) {
+    const dropdownContent = mainTagElt.querySelector(".filter_container");
+    const dropdownIcon = mainTagElt.querySelector(".dropdown-icon");
+    dropdownIcon.addEventListener("click", () => {
+        const allOpenDropdowns = document.querySelectorAll(".filter_container.open");
+        allOpenDropdowns.forEach((openDropdown) => {
+            if (openDropdown !== dropdownContent) {
+                openDropdown.classList.remove("open");
+                const openDropdownIcon = openDropdown.parentElement.querySelector(".dropdown-icon");
+                openDropdownIcon.classList.remove("fa-chevron-up", "dropdown-icon-up");
+                openDropdownIcon.classList.add("fa-chevron-down", "dropdown-icon-down");
+            }
+        });
+
+        if (!dropdownContent.classList.contains("open")) {
+            openedDropdown(mainTagElt, dropdownIcon);
+        } else {
+            closedDropdown(mainTagElt, dropdownIcon);
+        }
+    });
+}
+
+function closedDropdown(mainTagElt, dropdownIcon) {
     const dropdownContent = mainTagElt.querySelector(".filter_container");
     dropdownContent.classList.remove("open");
-    dropdownIconUp.classList.remove("fa-chevron-up", "dropdown-icon-up");
-    dropdownIconUp.classList.add("fa-chevron-down", "dropdown-icon-down");
-
-    const clickHandler = (e) => {
-        openedDropdown(mainTagElt, e.target);
-        dropdownIconUp.removeEventListener("click", clickHandler);
-    };
-
-    dropdownIconUp.addEventListener("click", clickHandler);
+    dropdownIcon.classList.remove("fa-chevron-up", "dropdown-icon-up");
+    dropdownIcon.classList.add("fa-chevron-down", "dropdown-icon-down");
 }
 
 function openedDropdown(mainTagElt, dropdownIcon) {
     mainTagElt.querySelector(".filter_container").classList.add("open");
     dropdownIcon.classList.add("fa-chevron-up", "dropdown-icon-up");
     dropdownIcon.classList.remove("fa-chevron-down", "dropdown-icon-down");
+}
 
-    const clickHandler = (e) => {
-        closedDropdown(mainTagElt);
-        dropdownIcon.removeEventListener("click", clickHandler);
-    };
+export function addTag(tagText) {
+    const selectedTag = document.createElement("div");
+    const tagContainer = document.querySelector(".tag_container");
+    selectedTag.textContent = tagText;
+    selectedTag.classList.add("selected_Tag", "fit-content", "rounded-md", "bg-chicky-yellow", "w-[210px]", "h-[300px]", "px-4", "py-2", "ml-10", "flex", "flex-row", "justify-between");
+    const iconElement = document.createElement("i");
+    iconElement.classList.add("fa-solid", "fa-xmark", "flex", "close_Icon");
 
-    dropdownIcon.addEventListener("click", clickHandler);
+    selectedTag.appendChild(iconElement);
+    tagContainer.appendChild(selectedTag);
+
+    iconElement.addEventListener("click", closeTag);
+}
+
+function selectTag(mainTagElt) {
+    let tags = mainTagElt.querySelectorAll("li");
+    // if (tags) {
+    tags.forEach((tag) => {
+        tag.addEventListener("click", () => {
+            console.log(tag.textContent);
+            const tagText = tag.textContent.trim();
+            if (tagText) {
+                addTag(tagText);
+            }
+        });
+    });
+    // }
+}
+
+function closeTag(e) {
+    console.log(e.target);
+    const iconElt = e.target;
+    const selectedTagElt = iconElt.closest(".selected_Tag");
+    selectedTagElt.remove();
 }
 
 export default { generateTagList };

@@ -23,7 +23,7 @@
 }
 
 .scrollbar-thumb {
-    scrollbar-color: rgb(56, 6, 192) rgb(168, 31, 31);
+    scrollbar-color: white white;
 }
 
 .text-capitalize {
@@ -53,4 +53,17 @@
 
 .fit-content {
     height: fit-content;
+}
+
+.selected_Tag {
+    padding: 10px;
+}
+.float-left {
+    float: left;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
 }

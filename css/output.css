@@ -580,12 +580,32 @@ video {
   top: 0.25rem;
 }
 
+.top-12 {
+  top: 3rem;
+}
+
 .top-6 {
   top: 1.5rem;
 }
 
 .top-\[697px\] {
   top: 697px;
+}
+
+.top-\[70px\] {
+  top: 70px;
+}
+
+.left-full {
+  left: 100%;
+}
+
+.top-3 {
+  top: 0.75rem;
+}
+
+.z-0 {
+  z-index: 0;
 }
 
 .z-10 {
@@ -596,9 +616,8 @@ video {
   z-index: 20;
 }
 
-.mx-20 {
-  margin-left: 5rem;
-  margin-right: 5rem;
+.float-left {
+  float: left;
 }
 
 .my-10 {
@@ -638,12 +657,20 @@ video {
   margin-left: 5rem;
 }
 
+.ml-28 {
+  margin-left: 7rem;
+}
+
 .mr-2 {
   margin-right: 0.5rem;
 }
 
 .mt-0 {
   margin-top: 0px;
+}
+
+.mt-24 {
+  margin-top: 6rem;
 }
 
 .mt-28 {
@@ -728,6 +755,10 @@ video {
 
 .justify-start {
   justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
 }
 
 .justify-center {
@@ -969,7 +1000,7 @@ video {
 }
 
 .scrollbar-thumb {
-  scrollbar-color: rgb(56, 6, 192) rgb(168, 31, 31);
+  scrollbar-color: white white;
 }
 
 .text-capitalize {
@@ -1000,6 +1031,20 @@ video {
 .fit-content {
   height: -moz-fit-content;
   height: fit-content;
+}
+
+.selected_Tag {
+  padding: 10px;
+}
+
+.float-left {
+  float: left;
+}
+
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .hover\:bg-chicky-yellow:hover {

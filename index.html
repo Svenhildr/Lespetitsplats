@@ -44,12 +44,13 @@
         </header>
         <!-- section filtres -->
         <main class="main_container relative z-20 top-[697px]">
-            <div class="filter-container flex flex-row justify-start mx-20 mb-10">
+            <!-- <div class="filter_main_container flex flex-col"> -->
+            <div class="filter-container absolute z-10 flex flex-row justify-start mb-10 ml-28">
                 <div id="ingredients" class="content_dropdown">
                     <div class="filter_dropdown fit-content rounded-md bg-white w-[210px] h-[300px] px-4 py-2 ml-10 flex flex-col justify-start">
                         <span class="flex items-center justify-between pb-2 font-medium">
                             Ingrédients
-                            <i class="dropdown-icon-up fa-solid fa-chevron-up pl-2"></i>
+                            <i class="dropdown-icon-up dropdown-icon fa-solid fa-chevron-down pl-2"></i>
                         </span>
                         <div class="filter_container hidden flex-col justify-between max-h-[250px]">
                             <div class="searchbar_filter_container relative rounded border-solid border border-light-grey">
@@ -66,7 +67,7 @@
                     <div class="filter_dropdown fit-content rounded-md bg-white w-[210px] h-[300px] px-4 py-2 ml-10 flex flex-col justify-start">
                         <span class="flex items-center justify-between pb-2 font-medium">
                             Appareils
-                            <i class="dropdown-icon-up fa-solid fa-chevron-up pl-2"></i>
+                            <i class="dropdown-icon-up dropdown-icon fa-solid fa-chevron-down pl-2"></i>
                         </span>
                         <div class="filter_container hidden flex-col justify-between max-h-[250px]">
                             <div class="searchbar_filter_container relative rounded border-solid border border-light-grey">
@@ -83,7 +84,7 @@
                     <div class="filter_dropdown fit-content rounded-md bg-white w-[210px] h-[300px] px-4 py-2 ml-10 flex flex-col justify-start">
                         <span class="flex items-center justify-between pb-2 font-medium">
                             Ustensiles
-                            <i class="dropdown-icon-up fa-solid fa-chevron-up pl-2"></i>
+                            <i class="dropdown-icon-up dropdown-icon fa-solid fa-chevron-down pl-2"></i>
                         </span>
                         <div class="filter_container hidden flex-col justify-between max-h-[250px]">
                             <div class="searchbar_filter_container relative rounded border-solid border border-light-grey">
@@ -95,32 +96,36 @@
                         </div>
                     </div>
                 </div>
+                <div class="recipe-number font-['Anton'] text-xl font-bold relative left-full top-3">1500 recettes</div>
             </div>
+            <div class="tag_container relative top-[70px] ml-28 flex flex-row"></div>
 
             <!-- section recettes cards -->
-            <div class="recipe-number font-['Anton'] text-xl font-bold mb-4">1500 recettes</div>
-            <div class="card_container flex flex-row flex-wrap justify-center">
-                <div class="card my-10 w-1/4 bg-white rounded-3xl overflow-hidden ml-20">
-                    <div class="photo_container h-[253px] rounded-3xl mb-8 relative">
-                        <img src="./assets/Recette01.jpg" alt="" class="object-cover w-full h-full" />
-                        <span class="time_buble px-4 py-1 text-[12px] bg-chicky-yellow rounded-3xl absolute top-6 right-6">50 min</span>
-                    </div>
 
-                    <div class="card_info w-full px-7">
-                        <h2 class="card_title mt-7 font-['Anton'] font-extrabold text-lg mb-6"></h2>
-                        <div class="recipe_content">
-                            <h3 class="recipe_title text-xs text-medium-grey font-bold mb-4"></h3>
-                            <p class="recipe text-wrap text-[14px]"></p>
+            <div class="card_container relative top-12 z-0 flex flex-row flex-wrap justify-center">
+                <template id="recipe_card_template">
+                    <div class="card my-10 w-1/4 bg-white rounded-3xl overflow-hidden ml-20">
+                        <div class="photo_container h-[253px] rounded-3xl mb-8 relative">
+                            <img src="./assets/Recette01.jpg" alt="" class="object-cover w-full h-full" />
+                            <span class="time_buble px-4 py-1 text-[12px] bg-chicky-yellow rounded-3xl absolute top-6 right-6">50 min</span>
                         </div>
-                        <div class="ingredients_container mb-12 flex flex-row">
-                            <h3 class="ingredients_title text-xs text-medium-grey font-bold mt-7 mb-4">INGREDIENTS</h3>
-                            <div class="ingredients_content flex flex-col w-full">
-                                <p class="ingredients_name font-semibold text-[14px]">Lait de coco</p>
-                                <p class="ingredients_quantity text-[14px] text-medium-grey">400ml</p>
+
+                        <div class="card_info w-full px-7">
+                            <h2 class="card_title mt-7 font-['Anton'] font-extrabold text-lg mb-6"></h2>
+                            <div class="recipe_content">
+                                <h3 class="recipe_title text-xs text-medium-grey font-bold mb-4"></h3>
+                                <p class="recipe text-wrap text-[14px]"></p>
+                            </div>
+                            <div class="ingredients_container mb-12 flex flex-row">
+                                <h3 class="ingredients_title text-xs text-medium-grey font-bold mt-7 mb-4">INGREDIENTS</h3>
+                                <div class="ingredients_content flex flex-col w-full">
+                                    <p class="ingredients_name font-semibold text-[14px]">Lait de coco</p>
+                                    <p class="ingredients_quantity text-[14px] text-medium-grey">400ml</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </template>
             </div>
         </main>
     </body>

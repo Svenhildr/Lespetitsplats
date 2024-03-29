@@ -2,7 +2,7 @@ let ingredientTags = [];
 let applianceTags = [];
 let ustensilsTags = [];
 
-import { generateTagList, initTag } from "./tag.js";
+import { generateTagList, initTag, addTag } from "./tag.js";
 import createCard from "./Template/createCard.js";
 // import createTag from "./Template/createTag.js";
 
@@ -14,13 +14,9 @@ import createCard from "./Template/createCard.js";
  */
 function init() {
     cardDisplay(recipes);
-    // generateTagList(recipes);
+
     [ingredientTags, applianceTags, ustensilsTags] = generateTagList(recipes);
-    // applianceTags = generateTagList(recipes);
-    // ustensilsTags = generateTagList(recipes);
-    /*     console.log(ingredientTags);
-    console.log(applianceTags);
-    console.log(ustensilsTags); */
+
     initTag(ingredientTags, "ingredients");
     initTag(applianceTags, "appliances");
     initTag(ustensilsTags, "ustensils");
