@@ -24,11 +24,11 @@ export function generateTagList(recipes) {
     return [Array.from(ingredientsSet).sort(), Array.from(appliancesSet).sort(), Array.from(ustensilsSet).sort()];
 }
 
-export function initTag(tags, nameTag) {
+export function initTag(tags, nameTag, fullTagList) {
     let mainTagElt = document.querySelector(`#${nameTag}`);
     createTag(tags, nameTag);
     toggleDropdown(mainTagElt);
-    selectTag(mainTagElt);
+    selectTag(mainTagElt, fullTagList);
 }
 
 function toggleDropdown(mainTagElt) {
@@ -66,10 +66,52 @@ function openedDropdown(mainTagElt, dropdownIcon) {
     dropdownIcon.classList.remove("fa-chevron-down", "dropdown-icon-down");
 }
 
-export function addTag(tagText) {
+function selectTag(mainTagElt, fullTagList) {
+    let tags = mainTagElt.querySelectorAll("li");
+
+    tags.forEach((tag) => {
+        tag.addEventListener("click", () => {
+            console.log(tag.textContent);
+            const tagText = tag.textContent.trim();
+            if (tagText) {
+                addTag(tagText);
+                const index = fullTagList.indexOf(tagText);
+                if (index !== -1) {
+                    fullTagList.splice(index, 1);
+                    updateTagList(mainTagElt, fullTagList);
+                }
+                // tag.remove();
+            }
+        });
+    });
+}
+
+function closeTag(e, fullTagList) {
+    console.log(e.target);
+    const iconElt = e.target;
+    const selectedTagElt = iconElt.closest(".selected_Tag");
+    selectedTagElt.remove();
+    const tagText = selectedTagElt.textContent.trim();
+    if (tagText) {
+        fullTagList.push(tagText);
+        updateTagList(mainTagElt, fullTagList);
+        selectedTagElt.remove();
+    }
+}
+
+function updateTagList(container, tagText) {
+    const tagList = container.querySelector(".tag_list");
+    const newTagElt = document.createElement("li");
+    newTagElt.textContent = tagText;
+    newTagElt.classList.add("text-capitalize", "text-nowrap", "hover:bg-chicky-yellow", "ease-in-out", "duration-200", "rounded", "px-2");
+    tagList.appendChild(newTagElt);
+}
+
+export function addTag(tagText, fullTagList) {
     const selectedTag = document.createElement("div");
     const tagContainer = document.querySelector(".tag_container");
     selectedTag.textContent = tagText;
+
     selectedTag.classList.add("selected_Tag", "fit-content", "rounded-md", "bg-chicky-yellow", "w-[210px]", "h-[300px]", "px-4", "py-2", "ml-10", "flex", "flex-row", "justify-between");
     const iconElement = document.createElement("i");
     iconElement.classList.add("fa-solid", "fa-xmark", "flex", "close_Icon");
@@ -77,29 +119,6 @@ export function addTag(tagText) {
     selectedTag.appendChild(iconElement);
     tagContainer.appendChild(selectedTag);
 
-    iconElement.addEventListener("click", closeTag);
+    iconElement.addEventListener("click", (e) => closeTag(e, fullTagList));
 }
-
-function selectTag(mainTagElt) {
-    let tags = mainTagElt.querySelectorAll("li");
-    // if (tags) {
-    tags.forEach((tag) => {
-        tag.addEventListener("click", () => {
-            console.log(tag.textContent);
-            const tagText = tag.textContent.trim();
-            if (tagText) {
-                addTag(tagText);
-            }
-        });
-    });
-    // }
-}
-
-function closeTag(e) {
-    console.log(e.target);
-    const iconElt = e.target;
-    const selectedTagElt = iconElt.closest(".selected_Tag");
-    selectedTagElt.remove();
-}
-
 export default { generateTagList };
