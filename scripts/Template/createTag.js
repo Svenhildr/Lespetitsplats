@@ -13,7 +13,7 @@ export default function createTag(tags, nameTag) {
     tags.forEach((tag) => {
         let tagElt = document.createElement("li");
         tagElt.textContent = tag;
-        tagElt.classList.add("text-capitalize", "text-nowrap", "hover:bg-chicky-yellow", "ease-in-out", "duration-200", "rounded", "px-2");
+        tagElt.classList.add("listElt", "text-capitalize", "text-nowrap", "hover:bg-chicky-yellow", "ease-in-out", "duration-200", "rounded", "px-2");
         tagList.appendChild(tagElt);
     });
 

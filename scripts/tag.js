@@ -81,6 +81,10 @@ function selectTag(mainTagElt, fullTagList) {
                     updateTagList(mainTagElt, fullTagList);
                 }
                 // tag.remove();
+                tag.classList.add("bg-chicky-yellow", "flex", "flex-row", "justify-between", "content-center");
+                const iconElement = document.createElement("i");
+                iconElement.classList.add("fa-solid", "fa-xmark", "flex", "close_Icon");
+                tag.appendChild(iconElement);
             }
         });
     });
