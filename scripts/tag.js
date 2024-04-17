@@ -1,4 +1,9 @@
-import createTag from "./Template/createTag.js";
+const ingredientTags = generateTagList(recipes)[0]; //liste des ingrédients
+const applianceTags = generateTagList(recipes)[1]; //liste des appareils
+const ustensilsTags = generateTagList(recipes)[2]; //liste des  ustensils
+let filtersList = []; //liste des filtres
+// import createTag from "./Template/createTag.js";
+// import { inputTagSearch } from "./Template/search.js";
 
 /**
  * Generates a list of unique ingredients, appliances, and utensils from the given recipes.
@@ -23,12 +28,16 @@ export function generateTagList(recipes) {
 
     return [Array.from(ingredientsSet).sort(), Array.from(appliancesSet).sort(), Array.from(ustensilsSet).sort()];
 }
-
-export function initTag(tags, nameTag, fullTagList) {
+export function initTags() {
+    initTag(ingredientTags, "ingredients");
+    initTag(applianceTags, "appliances");
+    initTag(ustensilsTags, "ustensils");
+}
+export function initTag(tags, nameTag) {
     let mainTagElt = document.querySelector(`#${nameTag}`);
     createTag(tags, nameTag);
     toggleDropdown(mainTagElt);
-    selectTag(mainTagElt, fullTagList);
+    inputTagSearch(tags, mainTagElt, tags, nameTag);
 }
 
 function toggleDropdown(mainTagElt) {
@@ -66,29 +75,7 @@ function openedDropdown(mainTagElt, dropdownIcon) {
     dropdownIcon.classList.remove("fa-chevron-down", "dropdown-icon-down");
 }
 
-function selectTag(mainTagElt, fullTagList) {
-    let tags = mainTagElt.querySelectorAll("li");
-
-    tags.forEach((tag) => {
-        tag.addEventListener("click", () => {
-            console.log(tag.textContent);
-            const tagText = tag.textContent.trim();
-            if (tagText) {
-                addTag(tagText);
-                const index = fullTagList.indexOf(tagText);
-                if (index !== -1) {
-                    fullTagList.splice(index, 1);
-                    updateTagList(mainTagElt, fullTagList);
-                }
-                // tag.remove();
-                tag.classList.add("bg-chicky-yellow", "flex", "flex-row", "justify-between", "content-center");
-                const iconElement = document.createElement("i");
-                iconElement.classList.add("fa-solid", "fa-xmark", "flex", "close_Icon");
-                tag.appendChild(iconElement);
-            }
-        });
-    });
-}
+// function selectTag(mainTagElt, fullTagList) {}
 
 function closeTag(e, fullTagList) {
     console.log(e.target);
@@ -98,31 +85,89 @@ function closeTag(e, fullTagList) {
     const tagText = selectedTagElt.textContent.trim();
     if (tagText) {
         fullTagList.push(tagText);
-        updateTagList(mainTagElt, fullTagList);
+        // updateTagList(mainTagElt, fullTagList);
         selectedTagElt.remove();
     }
 }
 
-function updateTagList(container, tagText) {
-    const tagList = container.querySelector(".tag_list");
-    const newTagElt = document.createElement("li");
-    newTagElt.textContent = tagText;
-    newTagElt.classList.add("text-capitalize", "text-nowrap", "hover:bg-chicky-yellow", "ease-in-out", "duration-200", "rounded", "px-2");
-    tagList.appendChild(newTagElt);
+function filteredTagList(mainTagElt, filteredTags) {
+    console.log(mainTagElt, filteredTags);
+    // Clear the existing tag list
+    // mainTagElt.innerHTML = "";
+
+    // Create new tag elements for each filtered tag and append them to the tag list container
+    filteredTags.forEach((tagText) => {
+        const newTagElt = document.createElement("li");
+        newTagElt.textContent = tagText;
+        newTagElt.classList.add("text-capitalize", "text-nowrap", "hover:bg-chicky-yellow", "ease-in-out", "duration-200", "rounded", "px-2");
+        mainTagElt.appendChild(newTagElt);
+    });
 }
 
-export function addTag(tagText, fullTagList) {
-    const selectedTag = document.createElement("div");
+function inputTagSearch(tags, mainTagElt, tagList, nameTag) {
+    mainTagElt.addEventListener("input", (event) => {
+        const inputValue = event.target.value.trim().toLowerCase();
+        const filteredTags = tags.filter((tag) => tag.toLowerCase().includes(inputValue));
+        // updateTagList(tagList, filteredTags);
+        filteredTagList(mainTagElt, filteredTags);
+    });
+}
+
+export function addTag() {
     const tagContainer = document.querySelector(".tag_container");
-    selectedTag.textContent = tagText;
+    tagContainer.innerHTML = "";
 
-    selectedTag.classList.add("selected_Tag", "fit-content", "rounded-md", "bg-chicky-yellow", "w-[210px]", "h-[300px]", "px-4", "py-2", "ml-10", "flex", "flex-row", "justify-between");
-    const iconElement = document.createElement("i");
-    iconElement.classList.add("fa-solid", "fa-xmark", "flex", "close_Icon");
+    filtersList.forEach((filter) => {
+        const selectedTag = document.createElement("div");
+        selectedTag.textContent = filter;
 
-    selectedTag.appendChild(iconElement);
-    tagContainer.appendChild(selectedTag);
+        selectedTag.classList.add("selected_Tag", "fit-content", "rounded-md", "bg-chicky-yellow", "w-[210px]", "h-[300px]", "px-4", "py-2", "ml-10", "flex", "flex-row", "justify-between");
+        const iconElement = document.createElement("i");
+        iconElement.classList.add("fa-solid", "fa-xmark", "flex", "close_Icon");
 
-    iconElement.addEventListener("click", (e) => closeTag(e, fullTagList));
+        selectedTag.appendChild(iconElement);
+        tagContainer.appendChild(selectedTag);
+
+        iconElement.addEventListener("click", (e) => closeTag(e, filtersList));
+    });
 }
+
+/**
+ * Create and append a list of tags to the filter dropdown element.
+ *
+ * @param {Array} tags - an array of tags to be added to the list
+ * @param {string} nameTag - the id of the filter dropdown element
+ * @return {void}
+ */
+export function createTag(tags, nameTag) {
+    const unfilteredList = document.getElementById(`unfiltered_${nameTag}`);
+    unfilteredList.classList.add("max-h-[250px]", "overflow-y-scroll", "scrollbar-thin", "scrollbar-thumb", "scrollbar-track", "opacity-10");
+    unfilteredList.innerHTML = "";
+
+    const filteredList = document.getElementById(`filtered_${nameTag}`);
+    filteredList.classList.add("max-h-[250px]", "overflow-y-scroll", "scrollbar-thin", "scrollbar-thumb", "scrollbar-track", "opacity-10", "flex", "flex-col", "gap-1");
+    filteredList.innerHTML = "";
+
+    tags.forEach((tag) => {
+        const tagElt = document.createElement("li");
+        tagElt.textContent = tag;
+        tagElt.classList.add("listElt", "text-capitalize", "text-nowrap");
+        if (!filtersList.includes(tag)) {
+            tagElt.classList.add("hover:bg-chicky-yellow", "ease-in-out", "duration-200", "rounded", "px-2");
+            unfilteredList.appendChild(tagElt);
+            tagElt.addEventListener("click", (e) => {
+                if (!filtersList.includes(tag)) {
+                    filtersList.push(tag);
+                }
+                console.log(filtersList);
+                addTag(filtersList);
+                createTag(tags, nameTag);
+            });
+        } else {
+            tagElt.classList.add("bg-chicky-yellow", "rounded", "px-2");
+            filteredList.appendChild(tagElt);
+        }
+    });
+}
+
 export default { generateTagList };

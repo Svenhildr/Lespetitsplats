@@ -18,13 +18,13 @@ export default function mainFilter(recipes) {
     });
 }
 
-function filteredTag(recipes, nameTag) {
+/* export function filteredTag(recipes, nameTag) {
     let filteredtags = recipes.filter((recipe) => {
         let ingredientTag = recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(mainSearchbar.value));
         return ingredientTag;
     });
     console.log(filteredtags);
-}
+} */
 
 /*function eltFilter(recipes) {
     console.log(eltFilter(recipes));

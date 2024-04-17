@@ -1,11 +1,11 @@
-let ingredientTags = [];
-let applianceTags = [];
-let ustensilsTags = [];
-
-import { generateTagList, initTag, addTag } from "./tag.js";
+// import createTag from "./Template/createTag.js";
+import { initTags } from "./tag.js";
 import createCard from "./Template/createCard.js";
 import searchBar from "./Template/search.js";
-// import createTag from "./Template/createTag.js";
+
+// [ingredientTags, applianceTags, ustensilsTags] = generateTagList(recipes);
+
+let filteredRecipes = []; //liste des recettes filtrées
 
 /**
  * Initialize the page by displaying recipe cards and creating tag lists for ingredients, appliances, and utensils.
@@ -17,11 +17,7 @@ function init() {
     cardDisplay(recipes);
     searchBar(recipes);
 
-    [ingredientTags, applianceTags, ustensilsTags] = generateTagList(recipes);
-
-    initTag(ingredientTags, "ingredients", generateTagList(recipes)[0]);
-    initTag(applianceTags, "appliances", generateTagList(recipes)[1]);
-    initTag(ustensilsTags, "ustensils", generateTagList(recipes)[2]);
+    initTags();
 }
 
 init();

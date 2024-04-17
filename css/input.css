@@ -67,3 +67,10 @@
     display: table;
     clear: both;
 }
+
+/* ul[id^="filtered_"] {
+    padding: 0.125rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */
