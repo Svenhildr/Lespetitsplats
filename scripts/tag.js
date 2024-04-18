@@ -169,7 +169,6 @@ export function createTag(tags, nameTag) {
             const iconElt = document.createElement("i");
             iconElt.classList.add("fa-solid", "fa-xmark", "flex", "close_Icon", "pt-1", "pr-2");
             tagElt.appendChild(iconElt);
-            console.log("toto");
         }
     });
 }
