@@ -164,8 +164,11 @@ export function createTag(tags, nameTag) {
                 createTag(tags, nameTag);
             });
         } else {
-            tagElt.classList.add("bg-chicky-yellow", "rounded", "px-2");
+            tagElt.classList.add("bg-chicky-yellow", "rounded", "px-2", "flex", "flex-row", "justify-between", "item-center");
             filteredList.appendChild(tagElt);
+            const iconElt = document.createElement("i");
+            iconElt.classList.add("fa-solid", "fa-xmark", "flex", "close_Icon", "pt-1", "pr-2");
+            tagElt.appendChild(iconElt);
         }
     });
 }
