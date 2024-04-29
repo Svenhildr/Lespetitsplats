@@ -94,3 +94,43 @@
             }
         });
     }); */
+
+/* export function filteredTag(recipes, nameTag) {
+    let filteredtags = recipes.filter((recipe) => {
+        let ingredientTag = recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(mainSearchbar.value));
+        return ingredientTag;
+    });
+    console.log(filteredtags);
+} */
+
+/*function eltFilter(recipes) {
+    console.log(eltFilter(recipes));
+     const searchTermLower = letters.toLowerCase();
+    for (let i = 0; i < elts.length; i++) {
+        if (elts[i].textContent.toLowerCase().includes(searchTermLower)) {
+            elts[i].style.display = "block";
+        } else {
+            elts[i].style.display = "none";
+        }
+    } 
+}*/
+// import createTag from "./Template/createTag.js";
+// import { inputTagSearch } from "./Template/search.js";
+
+/* function filteredTagList(mainTagElt, filteredTags) {
+    console.log(mainTagElt, filteredTags);
+    // Clear the existing tag list
+    // mainTagElt.innerHTML = "";
+
+    // Create new tag elements for each filtered tag and append them to the tag list container
+    filteredTags.forEach((tagText) => {
+        const newTagElt = document.createElement("li");
+        newTagElt.textContent = tagText;
+        newTagElt.classList.add("text-capitalize", "text-nowrap", "hover:bg-chicky-yellow", "ease-in-out", "duration-200", "rounded", "px-2");
+        mainTagElt.appendChild(newTagElt);
+    });
+}
+ */
+
+// updateTagList(tagList, filteredTags);
+// filteredTagList(mainTagElt, filteredTags);

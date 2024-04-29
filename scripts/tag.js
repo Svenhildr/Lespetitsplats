@@ -1,22 +1,28 @@
-const ingredientTags = generateTagList(recipes)[0]; //liste des ingrédients
-const applianceTags = generateTagList(recipes)[1]; //liste des appareils
-const ustensilsTags = generateTagList(recipes)[2]; //liste des  ustensils
-let filtersList = []; //liste des filtres
-// import createTag from "./Template/createTag.js";
-// import { inputTagSearch } from "./Template/search.js";
+import { cardDisplay } from "./index.js";
+import { filteredRecipes } from "./Template/search.js";
+export let filtersList = []; //liste des filtres
 
+let ingredientTags = generateTagList(recipes)[0]; //liste des ingrédients
+let applianceTags = generateTagList(recipes)[1]; //liste des appareils
+let ustensilsTags = generateTagList(recipes)[2]; //liste des  ustensils
+
+function generateTagLists(recipesList) {
+    ingredientTags = generateTagList(recipesList)[0]; //liste des ingrédients
+    applianceTags = generateTagList(recipesList)[1]; //liste des appareils
+    ustensilsTags = generateTagList(recipesList)[2]; //liste des  ustensils
+}
 /**
  * Generates a list of unique ingredients, appliances, and utensils from the given recipes.
  *
- * @param {Array} recipes - An array of recipe objects
+ * @param {Array} recipesList - An array of recipe objects
  * @return {Array} An array containing unique ingredients, unique appliances, and unique utensils
  */
-export function generateTagList(recipes) {
+export function generateTagList(recipesList) {
     let ingredientsSet = new Set();
     let appliancesSet = new Set();
     let ustensilsSet = new Set();
 
-    recipes.forEach((recipe) => {
+    recipesList.forEach((recipe) => {
         recipe.ingredients.forEach((ingredient) => {
             ingredientsSet.add(ingredient.ingredient.trim().toLowerCase());
         });
@@ -28,11 +34,23 @@ export function generateTagList(recipes) {
 
     return [Array.from(ingredientsSet).sort(), Array.from(appliancesSet).sort(), Array.from(ustensilsSet).sort()];
 }
+
+function onRecipesUpdated() {
+    // const tempList = filteredRecipes.length == 0 ? recipes : filteredRecipes;
+    generateTagLists(filteredRecipes.length == 0 ? recipes : filteredRecipes);
+    createTag(ingredientTags, "ingredients");
+    createTag(applianceTags, "appliances");
+    createTag(ustensilsTags, "ustensils");
+}
+
 export function initTags() {
     initTag(ingredientTags, "ingredients");
     initTag(applianceTags, "appliances");
     initTag(ustensilsTags, "ustensils");
+
+    document.getElementById("searchbar").addEventListener("recipesUpdated", onRecipesUpdated);
 }
+
 export function initTag(tags, nameTag) {
     let mainTagElt = document.querySelector(`#${nameTag}`);
     createTag(tags, nameTag);
@@ -77,20 +95,7 @@ function openedDropdown(mainTagElt, dropdownIcon) {
 
 // function selectTag(mainTagElt, fullTagList) {}
 
-function closeTag(e, fullTagList) {
-    console.log(e.target);
-    const iconElt = e.target;
-    const selectedTagElt = iconElt.closest(".selected_Tag");
-    selectedTagElt.remove();
-    const tagText = selectedTagElt.textContent.trim();
-    if (tagText) {
-        fullTagList.push(tagText);
-        // updateTagList(mainTagElt, fullTagList);
-        selectedTagElt.remove();
-    }
-}
-
-function filteredTagList(mainTagElt, filteredTags) {
+/* function filteredTagList(mainTagElt, filteredTags) {
     console.log(mainTagElt, filteredTags);
     // Clear the existing tag list
     // mainTagElt.innerHTML = "";
@@ -103,13 +108,14 @@ function filteredTagList(mainTagElt, filteredTags) {
         mainTagElt.appendChild(newTagElt);
     });
 }
-
+ */
 function inputTagSearch(tags, mainTagElt, tagList, nameTag) {
     mainTagElt.addEventListener("input", (event) => {
         const inputValue = event.target.value.trim().toLowerCase();
         const filteredTags = tags.filter((tag) => tag.toLowerCase().includes(inputValue));
         // updateTagList(tagList, filteredTags);
-        filteredTagList(mainTagElt, filteredTags);
+        // filteredTagList(mainTagElt, filteredTags);
+        createTag(filteredTags, nameTag);
     });
 }
 
@@ -147,6 +153,7 @@ export function createTag(tags, nameTag) {
     const filteredList = document.getElementById(`filtered_${nameTag}`);
     filteredList.classList.add("max-h-[250px]", "overflow-y-scroll", "scrollbar-thin", "scrollbar-thumb", "scrollbar-track", "opacity-10", "flex", "flex-col", "gap-1");
     filteredList.innerHTML = "";
+    console.log(filtersList);
 
     tags.forEach((tag) => {
         const tagElt = document.createElement("li");
@@ -159,7 +166,7 @@ export function createTag(tags, nameTag) {
                 if (!filtersList.includes(tag)) {
                     filtersList.push(tag);
                 }
-                console.log(filtersList);
+                // console.log(filtersList);
                 addTag(filtersList);
                 createTag(tags, nameTag);
             });
@@ -171,6 +178,20 @@ export function createTag(tags, nameTag) {
             tagElt.appendChild(iconElt);
         }
     });
+    cardDisplay(filteredRecipes);
+}
+
+function closeTag(e, filtersList) {
+    // console.log(e.target);
+    const iconElt = e.target;
+    const selectedTagElt = iconElt.closest(".selected_Tag");
+    selectedTagElt.remove();
+    const tagText = selectedTagElt.textContent.trim();
+    if (tagText) {
+        addTag(filtersList);
+        // updateTagList(mainTagElt, fullTagList);
+        selectedTagElt.remove();
+    }
 }
 
 export default { generateTagList };
