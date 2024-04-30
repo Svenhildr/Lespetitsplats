@@ -1,5 +1,5 @@
 import { cardDisplay } from "./index.js";
-import { filteredRecipes } from "./Template/search.js";
+import { filteredRecipesUpdate, recipesFilterUpdate } from "./Template/search.js";
 export let filtersList = []; //liste des filtres
 
 let ingredientTags = generateTagList(recipes)[0]; //liste des ingrédients
@@ -52,7 +52,7 @@ export function generateTagList(recipesList) {
  */
 function onRecipesUpdated() {
     // Si aucune recette n'est filtrée, utilise la liste complète des recettes, sinon utilise les recettes filtrées
-    generateTagLists(filteredRecipes.length == 0 ? recipes : filteredRecipes);
+    generateTagLists(filteredRecipesUpdate.length == 0 ? recipes : filteredRecipesUpdate);
     // Crée et met à jour les tags d'ingrédients, d'appareils et d'ustensiles
     createTag(ingredientTags, "ingredients");
     createTag(applianceTags, "appliances");
@@ -208,7 +208,6 @@ export function createTag(tags, nameTag) {
     const filteredList = document.getElementById(`filtered_${nameTag}`);
     filteredList.classList.add("max-h-[250px]", "overflow-y-scroll", "scrollbar-thin", "scrollbar-thumb", "scrollbar-track", "opacity-10", "flex", "flex-col", "gap-1");
     filteredList.innerHTML = "";
-    console.log(filtersList);
 
     tags.forEach((tag) => {
         const tagElt = document.createElement("li");
@@ -233,7 +232,8 @@ export function createTag(tags, nameTag) {
             iconElt.classList.add("fa-solid", "fa-xmark", "flex", "close_Icon", "pt-1", "pr-2");
             // iconElt.addEventListener("click", (e) => {
             // faire la fermeture du tag et le remettre dans la liste}
-
+            recipesFilterUpdate(filteredRecipesUpdate);
+            console.log(filteredRecipesUpdate);
             tagElt.appendChild(iconElt);
         }
     });
