@@ -6,11 +6,19 @@ let ingredientTags = generateTagList(recipes)[0]; //liste des ingrédients
 let applianceTags = generateTagList(recipes)[1]; //liste des appareils
 let ustensilsTags = generateTagList(recipes)[2]; //liste des  ustensils
 
+/**
+ * Generates tag lists for ingredients, appliances, and utensils based on the given list of recipes.
+ *
+ * @function generateTagLists
+ * @param {Array} recipesList - An array of recipe objects
+ * @returns {void}
+ */
 function generateTagLists(recipesList) {
     ingredientTags = generateTagList(recipesList)[0]; //liste des ingrédients
     applianceTags = generateTagList(recipesList)[1]; //liste des appareils
     ustensilsTags = generateTagList(recipesList)[2]; //liste des  ustensils
 }
+
 /**
  * Generates a list of unique ingredients, appliances, and utensils from the given recipes.
  *
@@ -35,22 +43,45 @@ export function generateTagList(recipesList) {
     return [Array.from(ingredientsSet).sort(), Array.from(appliancesSet).sort(), Array.from(ustensilsSet).sort()];
 }
 
+/**
+ * Updates the tags based on the filtered recipes.
+ * If no recipes are filtered, uses the complete list of recipes.
+ *
+ * @function onRecipesUpdated
+ * @returns {void}
+ */
 function onRecipesUpdated() {
-    // const tempList = filteredRecipes.length == 0 ? recipes : filteredRecipes;
+    // Si aucune recette n'est filtrée, utilise la liste complète des recettes, sinon utilise les recettes filtrées
     generateTagLists(filteredRecipes.length == 0 ? recipes : filteredRecipes);
+    // Crée et met à jour les tags d'ingrédients, d'appareils et d'ustensiles
     createTag(ingredientTags, "ingredients");
     createTag(applianceTags, "appliances");
     createTag(ustensilsTags, "ustensils");
 }
 
+/**
+ * Initializes the tags for ingredients, appliances, and utensils.
+ * Also, sets up an event listener to update tags when recipes are updated.
+ *
+ * @function initTags
+ * @returns {void}
+ */
 export function initTags() {
     initTag(ingredientTags, "ingredients");
     initTag(applianceTags, "appliances");
     initTag(ustensilsTags, "ustensils");
-
+    // Ajoute un listener pour mettre à jour les tags lorsque les recettes sont mises à jour
     document.getElementById("searchbar").addEventListener("recipesUpdated", onRecipesUpdated);
 }
 
+/**
+ * Initializes a specific tag element.
+ *
+ * @function initTag
+ * @param {Array} tags - The list of tags to be initialized
+ * @param {string} nameTag - The ID of the tag element
+ * @returns {void}
+ */
 export function initTag(tags, nameTag) {
     let mainTagElt = document.querySelector(`#${nameTag}`);
     createTag(tags, nameTag);
@@ -58,6 +89,13 @@ export function initTag(tags, nameTag) {
     inputTagSearch(tags, mainTagElt, tags, nameTag);
 }
 
+/**
+ * Toggles the dropdown menu of the main tag element.
+ *
+ * @function toggleDropdown
+ * @param {HTMLElement} mainTagElt - The main tag element containing the dropdown menu
+ * @returns {void}
+ */
 function toggleDropdown(mainTagElt) {
     const dropdownContent = mainTagElt.querySelector(".filter_container");
     const dropdownIcon = mainTagElt.querySelector(".dropdown-icon");
@@ -80,6 +118,14 @@ function toggleDropdown(mainTagElt) {
     });
 }
 
+/**
+ * Closes the dropdown menu of the main tag element.
+ *
+ * @function closedDropdown
+ * @param {HTMLElement} mainTagElt - The main tag element containing the dropdown menu
+ * @param {HTMLElement} dropdownIcon - The icon element representing the dropdown state
+ * @returns {void}
+ */
 function closedDropdown(mainTagElt, dropdownIcon) {
     const dropdownContent = mainTagElt.querySelector(".filter_container");
     dropdownContent.classList.remove("open");
@@ -87,38 +133,45 @@ function closedDropdown(mainTagElt, dropdownIcon) {
     dropdownIcon.classList.add("fa-chevron-down", "dropdown-icon-down");
 }
 
+/**
+ * Opens the dropdown menu of the main tag element.
+ *
+ * @function openedDropdown
+ * @param {HTMLElement} mainTagElt - The main tag element containing the dropdown menu
+ * @param {HTMLElement} dropdownIcon - The icon element representing the dropdown state
+ * @returns {void}
+ */
 function openedDropdown(mainTagElt, dropdownIcon) {
     mainTagElt.querySelector(".filter_container").classList.add("open");
     dropdownIcon.classList.add("fa-chevron-up", "dropdown-icon-up");
     dropdownIcon.classList.remove("fa-chevron-down", "dropdown-icon-down");
 }
 
-// function selectTag(mainTagElt, fullTagList) {}
-
-/* function filteredTagList(mainTagElt, filteredTags) {
-    console.log(mainTagElt, filteredTags);
-    // Clear the existing tag list
-    // mainTagElt.innerHTML = "";
-
-    // Create new tag elements for each filtered tag and append them to the tag list container
-    filteredTags.forEach((tagText) => {
-        const newTagElt = document.createElement("li");
-        newTagElt.textContent = tagText;
-        newTagElt.classList.add("text-capitalize", "text-nowrap", "hover:bg-chicky-yellow", "ease-in-out", "duration-200", "rounded", "px-2");
-        mainTagElt.appendChild(newTagElt);
-    });
-}
+/**
+ * Listens for input events on the main tag element and filters the tag list accordingly.
+ *
+ * @function inputTagSearch
+ * @param {Array<string>} tags - An array of tag strings to be filtered
+ * @param {HTMLElement} mainTagElt - The main tag element to listen for input events
+ * @param {Array<string>} tagList - The original list of tags
+ * @param {string} nameTag - The name of the tag being filtered
+ * @returns {void}
  */
 function inputTagSearch(tags, mainTagElt, tagList, nameTag) {
     mainTagElt.addEventListener("input", (event) => {
         const inputValue = event.target.value.trim().toLowerCase();
+        // Filtre les tags en fonction de la valeur saisie
         const filteredTags = tags.filter((tag) => tag.toLowerCase().includes(inputValue));
-        // updateTagList(tagList, filteredTags);
-        // filteredTagList(mainTagElt, filteredTags);
         createTag(filteredTags, nameTag);
     });
 }
 
+/**
+ * Adds selected tags to the tag container.
+ *
+ * @function addTag
+ * @returns {void}
+ */
 export function addTag() {
     const tagContainer = document.querySelector(".tag_container");
     tagContainer.innerHTML = "";
@@ -134,16 +187,18 @@ export function addTag() {
         selectedTag.appendChild(iconElement);
         tagContainer.appendChild(selectedTag);
 
+        // Ajoute un écouteur d'événements au clic sur l'icône pour supprimer le tag
         iconElement.addEventListener("click", (e) => closeTag(e, filtersList));
     });
 }
 
 /**
- * Create and append a list of tags to the filter dropdown element.
+ * Creates and appends a list of tags to the filter dropdown element.
  *
- * @param {Array} tags - an array of tags to be added to the list
- * @param {string} nameTag - the id of the filter dropdown element
- * @return {void}
+ * @function createTag
+ * @param {Array} tags - An array of tags to be added to the list
+ * @param {string} nameTag - The ID of the filter dropdown element
+ * @returns {void}
  */
 export function createTag(tags, nameTag) {
     const unfilteredList = document.getElementById(`unfiltered_${nameTag}`);
@@ -162,11 +217,12 @@ export function createTag(tags, nameTag) {
         if (!filtersList.includes(tag)) {
             tagElt.classList.add("hover:bg-chicky-yellow", "ease-in-out", "duration-200", "rounded", "px-2");
             unfilteredList.appendChild(tagElt);
+
+            // Ajoute listener pour ajouter le tag sélectionné
             tagElt.addEventListener("click", (e) => {
                 if (!filtersList.includes(tag)) {
                     filtersList.push(tag);
                 }
-                // console.log(filtersList);
                 addTag(filtersList);
                 createTag(tags, nameTag);
             });
@@ -175,21 +231,29 @@ export function createTag(tags, nameTag) {
             filteredList.appendChild(tagElt);
             const iconElt = document.createElement("i");
             iconElt.classList.add("fa-solid", "fa-xmark", "flex", "close_Icon", "pt-1", "pr-2");
+            // iconElt.addEventListener("click", (e) => {
+            // faire la fermeture du tag et le remettre dans la liste}
+
             tagElt.appendChild(iconElt);
         }
     });
-    cardDisplay(filteredRecipes);
 }
 
+/**
+ * Removes the selected tag from the tag container.
+ *
+ * @function closeTag
+ * @param {Event} e - The event object
+ * @param {Array} filtersList - The list of selected filters
+ * @returns {void}
+ */
 function closeTag(e, filtersList) {
-    // console.log(e.target);
     const iconElt = e.target;
     const selectedTagElt = iconElt.closest(".selected_Tag");
     selectedTagElt.remove();
     const tagText = selectedTagElt.textContent.trim();
     if (tagText) {
         addTag(filtersList);
-        // updateTagList(mainTagElt, fullTagList);
         selectedTagElt.remove();
     }
 }

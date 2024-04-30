@@ -3,16 +3,28 @@ import { filtersList } from "../tag.js";
 
 export let filteredRecipes = [];
 
+/**
+ * Attaches an event listener to the main search bar to filter recipes when the input value changes.
+ *
+ * @function mainFilter
+ * @param {Array} recipes - An array of recipe objects
+ * @returns {void}
+ */
 export default function mainFilter(recipes) {
     const mainSearchbar = document.getElementById("searchbar");
-    // const mainSearchButton = document.querySelector("main_search_button");
-
     mainSearchbar.addEventListener("input", (event) => {
         event.preventDefault();
         search(recipes);
     });
 }
 
+/**
+ * Searches for recipes based on the input value in the search bar and updates the filtered recipes list accordingly.
+ *
+ * @function search
+ * @param {Array} recipes - An array of recipe objects
+ * @returns {void}
+ */
 function search(recipes) {
     const mainSearchbar = document.getElementById("searchbar");
     let filteredRecipesTemp = filtersList.length === 0 ? recipes : filteredRecipes;

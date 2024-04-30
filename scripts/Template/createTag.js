@@ -134,3 +134,24 @@
 
 // updateTagList(tagList, filteredTags);
 // filteredTagList(mainTagElt, filteredTags);
+
+// function selectTag(mainTagElt, fullTagList) {}
+
+/* function filteredTagList(mainTagElt, filteredTags) {
+    console.log(mainTagElt, filteredTags);
+    // Clear the existing tag list
+    // mainTagElt.innerHTML = "";
+
+    // Create new tag elements for each filtered tag and append them to the tag list container
+    filteredTags.forEach((tagText) => {
+        const newTagElt = document.createElement("li");
+        newTagElt.textContent = tagText;
+        newTagElt.classList.add("text-capitalize", "text-nowrap", "hover:bg-chicky-yellow", "ease-in-out", "duration-200", "rounded", "px-2");
+        mainTagElt.appendChild(newTagElt);
+    });
+}
+ */
+
+// [ingredientTags, applianceTags, ustensilsTags] = generateTagList(recipes);
+// let filtersList = [];
+// let filteredRecipes = []; //liste des recettes filtrées
