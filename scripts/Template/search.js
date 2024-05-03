@@ -28,7 +28,6 @@ export default function mainFilter(recipes) {
 function search(recipes) {
     const mainSearchbar = document.getElementById("searchbar");
     let filteredRecipesTemp = filtersList.length === 0 ? recipes : filteredRecipesUpdate;
-    const updateEvent = new Event("recipesUpdated");
     filteredRecipesUpdate = [];
     if (mainSearchbar.value.length >= 3) {
         console.log(mainSearchbar.value);
@@ -41,12 +40,20 @@ function search(recipes) {
         filteredRecipesUpdate = filteredRecipesTemp.filter((recipe) => !filtersList.some((existingRecipe) => existingRecipe.id === recipe.id));
     }
     cardDisplay(filteredRecipesTemp);
-    mainSearchbar.dispatchEvent(updateEvent);
-    recipesFilterUpdate();
+    // const updateEvent = new Event("recipesUpdated");
+    // mainSearchbar.dispatchEvent(updateEvent);
+    filterUpdate(filteredRecipesTemp);
 }
 
-export function recipesFilterUpdate(filteredRecipesTemp) {
-    let filteredTagRecipes = filteredRecipesUpdate.filter((recipe) => {
+/**
+ * Updates the filtered recipes based on the applied tags (ingredients, appliances, ustensils).
+ * @param {Array} filteredRecipesTemp The array of recipes filtered by the search query.
+ * @returns {void}
+ */
+export function filterUpdate(filteredRecipesTemp) {
+    let filteredRecipesToUpdate = filteredRecipesUpdate.length === 0 ? recipes : filteredRecipesUpdate;
+
+    let filteredTagRecipes = filteredRecipesToUpdate.filter((recipe) => {
         return filtersList.every((selectedElement) => {
             let isIngredientMatch = recipe.ingredients.some((item) => item.ingredient.toLowerCase() === selectedElement.toLowerCase());
 
@@ -58,30 +65,12 @@ export function recipesFilterUpdate(filteredRecipesTemp) {
             return isIngredientMatch || isApplianceMatch || isUstensilMatch;
         });
     });
+    filteredRecipesUpdate = filteredTagRecipes;
     cardDisplay(filteredTagRecipes);
+    const mainSearchbar = document.getElementById("searchbar");
+    // Crée un nouvel événement "recipesUpdated
+    const updateEvent = new Event("recipesUpdated");
+    // Déclenche l'événement "recipesUpdated" sur la barre de recherche principale
+    mainSearchbar.dispatchEvent(updateEvent);
+    console.log(filteredTagRecipes);
 }
-
-/* function filterByIngredients(recipes) {
-    const dropdownFilter = document.getElementById("ingredients");
-    let filteredIngredients = recipes.filter((recipe) => {
-        recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(filtersList.ingredient));
-    });
-    cardDisplay(filteredIngredients);
-} */
-
-/* tagListUpdated.every(selectedElement => {
-    let isIngredientMatch = recipe.ingredients.some(
-        item => item.ingredient.toLowerCase() === selectedElement.toLowerCase()
-    );
-    // Vérifier si l'élément sélectionné correspond à l'appareil de la recette
-    let isApplianceMatch =
-        recipe.appliance.toLowerCase() === selectedElement.toLowerCase();
-
-    // Vérifier si l'élément sélectionné est présent dans les ustensiles de la recette
-    let isUstensilMatch = recipe.ustensils.some(ustensil =>
-        ustensil.toLowerCase().includes(selectedElement.toLowerCase())
-    );
-
-    // Retourner vrai si l'élément sélectionné correspond à un ingrédient, un appareil ou un ustensile de la recette
-
-    return isIngredientMatch || isApplianceMatch || isUstensilMatch; */

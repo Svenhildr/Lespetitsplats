@@ -1,10 +1,11 @@
 import { cardDisplay } from "./index.js";
-import { filteredRecipesUpdate, recipesFilterUpdate } from "./Template/search.js";
+import { filteredRecipesUpdate, filterUpdate } from "./Template/search.js";
 export let filtersList = []; //liste des filtres
 
 let ingredientTags = generateTagList(recipes)[0]; //liste des ingrédients
 let applianceTags = generateTagList(recipes)[1]; //liste des appareils
 let ustensilsTags = generateTagList(recipes)[2]; //liste des  ustensils
+const iconElement = document.createElement("i");
 
 /**
  * Generates tag lists for ingredients, appliances, and utensils based on the given list of recipes.
@@ -54,9 +55,9 @@ function onRecipesUpdated() {
     // Si aucune recette n'est filtrée, utilise la liste complète des recettes, sinon utilise les recettes filtrées
     generateTagLists(filteredRecipesUpdate.length == 0 ? recipes : filteredRecipesUpdate);
     // Crée et met à jour les tags d'ingrédients, d'appareils et d'ustensiles
-    createTag(ingredientTags, "ingredients");
-    createTag(applianceTags, "appliances");
-    createTag(ustensilsTags, "ustensils");
+    createTagList(ingredientTags, "ingredients");
+    createTagList(applianceTags, "appliances");
+    createTagList(ustensilsTags, "ustensils");
 }
 
 /**
@@ -84,7 +85,7 @@ export function initTags() {
  */
 export function initTag(tags, nameTag) {
     let mainTagElt = document.querySelector(`#${nameTag}`);
-    createTag(tags, nameTag);
+    createTagList(tags, nameTag);
     toggleDropdown(mainTagElt);
     inputTagSearch(tags, mainTagElt, tags, nameTag);
 }
@@ -162,7 +163,7 @@ function inputTagSearch(tags, mainTagElt, tagList, nameTag) {
         const inputValue = event.target.value.trim().toLowerCase();
         // Filtre les tags en fonction de la valeur saisie
         const filteredTags = tags.filter((tag) => tag.toLowerCase().includes(inputValue));
-        createTag(filteredTags, nameTag);
+        createTagList(filteredTags, nameTag);
     });
 }
 
@@ -181,7 +182,8 @@ export function addTag() {
         selectedTag.textContent = filter;
 
         selectedTag.classList.add("selected_Tag", "fit-content", "rounded-md", "bg-chicky-yellow", "w-[210px]", "h-[300px]", "px-4", "py-2", "ml-10", "flex", "flex-row", "justify-between");
-        const iconElement = document.createElement("i");
+
+        const iconElement = document.createElement("span");
         iconElement.classList.add("fa-solid", "fa-xmark", "flex", "close_Icon");
 
         selectedTag.appendChild(iconElement);
@@ -200,7 +202,7 @@ export function addTag() {
  * @param {string} nameTag - The ID of the filter dropdown element
  * @returns {void}
  */
-export function createTag(tags, nameTag) {
+export function createTagList(tags, nameTag) {
     const unfilteredList = document.getElementById(`unfiltered_${nameTag}`);
     unfilteredList.classList.add("max-h-[250px]", "overflow-y-scroll", "scrollbar-thin", "scrollbar-thumb", "scrollbar-track", "opacity-10");
     unfilteredList.innerHTML = "";
@@ -213,6 +215,7 @@ export function createTag(tags, nameTag) {
         const tagElt = document.createElement("li");
         tagElt.textContent = tag;
         tagElt.classList.add("listElt", "text-capitalize", "text-nowrap");
+
         if (!filtersList.includes(tag)) {
             tagElt.classList.add("hover:bg-chicky-yellow", "ease-in-out", "duration-200", "rounded", "px-2");
             unfilteredList.appendChild(tagElt);
@@ -223,7 +226,8 @@ export function createTag(tags, nameTag) {
                     filtersList.push(tag);
                 }
                 addTag(filtersList);
-                createTag(tags, nameTag);
+                createTagList(tags, nameTag);
+                filterUpdate(filteredRecipesUpdate);
             });
         } else {
             tagElt.classList.add("bg-chicky-yellow", "rounded", "px-2", "flex", "flex-row", "justify-between", "item-center");
@@ -232,11 +236,11 @@ export function createTag(tags, nameTag) {
             iconElt.classList.add("fa-solid", "fa-xmark", "flex", "close_Icon", "pt-1", "pr-2");
             // iconElt.addEventListener("click", (e) => {
             // faire la fermeture du tag et le remettre dans la liste}
-            recipesFilterUpdate(filteredRecipesUpdate);
-            console.log(filteredRecipesUpdate);
+            // console.log(filteredRecipesUpdate);
             tagElt.appendChild(iconElt);
         }
     });
+    // filterUpdate(filteredRecipesUpdate);
 }
 
 /**
@@ -250,12 +254,18 @@ export function createTag(tags, nameTag) {
 function closeTag(e, filtersList) {
     const iconElt = e.target;
     const selectedTagElt = iconElt.closest(".selected_Tag");
-    selectedTagElt.remove();
+    console.log(selectedTagElt);
+
     const tagText = selectedTagElt.textContent.trim();
-    if (tagText) {
-        addTag(filtersList);
-        selectedTagElt.remove();
+    console.log(tagText);
+
+    const index = filtersList.indexOf(tagText);
+    if (index !== -1) {
+        filtersList.splice(index, 1); // Supprimer le tag de la liste des filtres
     }
+
+    // selectedTagElt.remove();
+    filterUpdate(filtersList);
 }
 
 export default { generateTagList };
