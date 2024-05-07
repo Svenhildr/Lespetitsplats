@@ -35,4 +35,6 @@ export function cardDisplay(displayRecipes) {
         const recipeCard = createCard(recipe);
         mainContainer.appendChild(recipeCard);
     });
+    document.querySelector(".recipe-number").textContent = displayRecipes.length + " recettes";
+    //mise à jour du nombre de recette
 }

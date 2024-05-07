@@ -604,6 +604,14 @@ video {
   top: 70px;
 }
 
+.right-0 {
+  right: 0px;
+}
+
+.left-1\/2 {
+  left: 50%;
+}
+
 .z-0 {
   z-index: 0;
 }

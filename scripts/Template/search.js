@@ -48,10 +48,16 @@ function search(recipes) {
 /**
  * Updates the filtered recipes based on the applied tags (ingredients, appliances, ustensils).
  * @param {Array} filteredRecipesTemp The array of recipes filtered by the search query.
+ * @param {boolean} isFilterDelete False by default, pass it to True when you delete a tag
  * @returns {void}
  */
-export function filterUpdate(filteredRecipesTemp) {
+export function filterUpdate(filteredRecipesTemp, isFilterDelete = false) {
     let filteredRecipesToUpdate = filteredRecipesUpdate.length === 0 ? recipes : filteredRecipesUpdate;
+
+    if (isFilterDelete) {
+        //condition pour forcer l'utilisation des "recipes" quand un tag est supprimé
+        filteredRecipesToUpdate = recipes;
+    }
 
     let filteredTagRecipes = filteredRecipesToUpdate.filter((recipe) => {
         return filtersList.every((selectedElement) => {
@@ -61,16 +67,17 @@ export function filterUpdate(filteredRecipesTemp) {
 
             let isUstensilMatch = recipe.ustensils.some((ustensil) => ustensil.toLowerCase().includes(selectedElement.toLowerCase()));
 
-            // Retourner vrai si l'élément sélectionné correspond à un ingrédient, un appareil ou un ustensile de la recette
+            // Retourne vrai si l'élément sélectionné correspond à un ingrédient, un appareil ou un ustensile de la recette
             return isIngredientMatch || isApplianceMatch || isUstensilMatch;
         });
     });
     filteredRecipesUpdate = filteredTagRecipes;
-    cardDisplay(filteredTagRecipes);
+    cardDisplay(filteredRecipesUpdate);
+    console.log(filteredRecipesUpdate);
+
     const mainSearchbar = document.getElementById("searchbar");
-    // Crée un nouvel événement "recipesUpdated
+    // Crée un nouvel événement "recipesUpdated"
     const updateEvent = new Event("recipesUpdated");
     // Déclenche l'événement "recipesUpdated" sur la barre de recherche principale
     mainSearchbar.dispatchEvent(updateEvent);
-    console.log(filteredTagRecipes);
 }

@@ -234,6 +234,7 @@ export function createTagList(tags, nameTag) {
             filteredList.appendChild(tagElt);
             const iconElt = document.createElement("i");
             iconElt.classList.add("fa-solid", "fa-xmark", "flex", "close_Icon", "pt-1", "pr-2");
+            iconElt.addEventListener("click", (e) => closeTag(e, filtersList, true));
             // iconElt.addEventListener("click", (e) => {
             // faire la fermeture du tag et le remettre dans la liste}
             // console.log(filteredRecipesUpdate);
@@ -251,21 +252,26 @@ export function createTagList(tags, nameTag) {
  * @param {Array} filtersList - The list of selected filters
  * @returns {void}
  */
-function closeTag(e, filtersList) {
+function closeTag(e, filtersList, allRecipes = false) {
     const iconElt = e.target;
-    const selectedTagElt = iconElt.closest(".selected_Tag");
-    console.log(selectedTagElt);
+    let selectedTagElt = iconElt.closest(".selected_Tag");
+    // console.log(selectedTagElt);
+
+    if (!selectedTagElt) {
+        selectedTagElt = iconElt.closest("li");
+    }
 
     const tagText = selectedTagElt.textContent.trim();
-    console.log(tagText);
+    // console.log(tagText);
 
     const index = filtersList.indexOf(tagText);
     if (index !== -1) {
-        filtersList.splice(index, 1); // Supprimer le tag de la liste des filtres
+        filtersList.splice(index, 1);
     }
-
+    selectedTagElt.remove();
     // selectedTagElt.remove();
-    filterUpdate(filtersList);
+    filterUpdate(filtersList, true);
+    addTag();
+    console.log(allRecipes);
 }
-
 export default { generateTagList };
