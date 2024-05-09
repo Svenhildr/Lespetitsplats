@@ -29,20 +29,31 @@ function search(recipes) {
     const mainSearchbar = document.getElementById("searchbar");
     let filteredRecipesTemp = filtersList.length === 0 ? recipes : filteredRecipesUpdate;
     filteredRecipesUpdate = [];
+
     if (mainSearchbar.value.length >= 3) {
-        console.log(mainSearchbar.value);
-        filteredRecipesTemp = recipes.filter((recipe) => {
-            let recipeNameMatch = recipe.name.toLowerCase().includes(mainSearchbar.value);
-            let recipeIngredientsMatch = recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(mainSearchbar.value));
-            let recipeDescriptionMatch = recipe.description.toLowerCase().includes(mainSearchbar.value);
-            return recipeIngredientsMatch || recipeNameMatch || recipeDescriptionMatch;
-        });
-        filteredRecipesUpdate = filteredRecipesTemp.filter((recipe) => !filtersList.some((existingRecipe) => existingRecipe.id === recipe.id));
+        const searchValue = mainSearchbar.value.toLowerCase();
+        for (let i = 0; i < recipes.length; i++) {
+            const recipe = recipes[i];
+            let recipeNameMatch = recipe.name.toLowerCase().includes(searchValue);
+            let recipeDescriptionMatch = recipe.description.toLowerCase().includes(searchValue);
+            let recipeIngredientsMatch = false;
+            for (let j = 0; j < recipe.ingredients.length; j++) {
+                const ingredient = recipe.ingredients[j].ingredient.toLowerCase();
+                if (ingredient.includes(searchValue)) {
+                    recipeIngredientsMatch = true;
+                    break;
+                }
+            }
+            if (recipeNameMatch || recipeDescriptionMatch || recipeIngredientsMatch) {
+                filteredRecipesUpdate.push(recipe);
+            }
+        }
+    } else {
+        filteredRecipesUpdate = recipes;
     }
-    cardDisplay(filteredRecipesTemp);
-    // const updateEvent = new Event("recipesUpdated");
-    // mainSearchbar.dispatchEvent(updateEvent);
-    filterUpdate(filteredRecipesTemp);
+
+    cardDisplay(filteredRecipesUpdate);
+    filterUpdate(filteredRecipesUpdate);
 }
 
 /**

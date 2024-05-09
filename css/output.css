@@ -556,8 +556,8 @@ video {
   left: 0px;
 }
 
-.left-full {
-  left: 100%;
+.left-1\/2 {
+  left: 50%;
 }
 
 .right-1 {
@@ -602,14 +602,6 @@ video {
 
 .top-\[70px\] {
   top: 70px;
-}
-
-.right-0 {
-  right: 0px;
-}
-
-.left-1\/2 {
-  left: 50%;
 }
 
 .z-0 {
