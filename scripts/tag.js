@@ -1,5 +1,5 @@
 import { cardDisplay } from "./index.js";
-import { filteredRecipesUpdate, filterUpdate } from "./Template/search.js";
+import { filteredRecipesUpdate, filterUpdate, search } from "./Template/search.js";
 export let filtersList = []; //liste des filtres
 
 let ingredientTags = generateTagList(recipes)[0]; //liste des ingrédients
@@ -227,21 +227,19 @@ export function createTagList(tags, nameTag) {
                 }
                 addTag(filtersList);
                 createTagList(tags, nameTag);
-                filterUpdate(filteredRecipesUpdate);
+                // filterUpdate(filteredRecipesUpdate);
+                filterUpdate();
             });
         } else {
             tagElt.classList.add("bg-chicky-yellow", "rounded", "px-2", "flex", "flex-row", "justify-between", "item-center");
             filteredList.appendChild(tagElt);
+
             const iconElt = document.createElement("i");
             iconElt.classList.add("fa-solid", "fa-xmark", "flex", "close_Icon", "pt-1", "pr-2");
             iconElt.addEventListener("click", (e) => closeTag(e, filtersList, true));
-            // iconElt.addEventListener("click", (e) => {
-            // faire la fermeture du tag et le remettre dans la liste}
-            // console.log(filteredRecipesUpdate);
             tagElt.appendChild(iconElt);
         }
     });
-    // filterUpdate(filteredRecipesUpdate);
 }
 
 /**
@@ -255,23 +253,21 @@ export function createTagList(tags, nameTag) {
 function closeTag(e, filtersList, allRecipes = false) {
     const iconElt = e.target;
     let selectedTagElt = iconElt.closest(".selected_Tag");
-    // console.log(selectedTagElt);
 
     if (!selectedTagElt) {
         selectedTagElt = iconElt.closest("li");
     }
 
     const tagText = selectedTagElt.textContent.trim();
-    // console.log(tagText);
 
     const index = filtersList.indexOf(tagText);
     if (index !== -1) {
         filtersList.splice(index, 1);
     }
     selectedTagElt.remove();
-    // selectedTagElt.remove();
-    filterUpdate(filtersList, true);
+    // filterUpdate(filtersList, true);
+    filterUpdate(true);
+    // search(recipes);
     addTag();
-    console.log(allRecipes);
 }
 export default { generateTagList };

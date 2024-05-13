@@ -556,8 +556,8 @@ video {
   left: 0px;
 }
 
-.left-full {
-  left: 100%;
+.left-1\/2 {
+  left: 50%;
 }
 
 .right-1 {
@@ -602,14 +602,6 @@ video {
 
 .top-\[70px\] {
   top: 70px;
-}
-
-.right-0 {
-  right: 0px;
-}
-
-.left-1\/2 {
-  left: 50%;
 }
 
 .z-0 {
@@ -1057,6 +1049,18 @@ ul[id^="filtered_"] > li {
 
 ul[id^="filtered_"] > li > i {
   padding-top: 4px;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  padding-right: 30px;
+  color: rgb(87, 82, 82);
+}
+
+.errorMsg {
+  font-size: x-large;
+  margin: 5% 0;
+  width: 50%;
+  /* text-shadow: 3px 3px 0 #000, -3px 3px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000;  */
 }
 
 .hover\:bg-chicky-yellow:hover {

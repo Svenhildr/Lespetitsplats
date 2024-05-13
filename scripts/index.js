@@ -28,13 +28,30 @@ init();
  * @returns {void}
  */
 export function cardDisplay(displayRecipes) {
+    console.log("cardDisplay call");
     const mainContainer = document.querySelector(".card_container");
     mainContainer.innerHTML = "";
+    //mise à jour du nombre de recette
+    updateRecipeNumber(displayRecipes.length);
+    if (displayRecipes.length === 0) {
+        const userSearch = document.getElementById("searchbar").value;
+        const errorMsg = document.createElement("p");
+        errorMsg.classList.add("errorMsg", "font-['Anton']", "text-medium-grey", "font-bold", "text-center");
+        errorMsg.innerHTML = `Aucune recette ne contient « <span style="color: black">${userSearch} </span>» .<br> Vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
+        mainContainer.appendChild(errorMsg);
+
+        // "`Aucune recette ne contient XXX. Vous pouvez chercher « tarte aux pommes », « poisson », etc.`;"; // Supprime le texte du nombre de recettes
+        return;
+    }
     // Crée une carte pour chaque recette dans les données récupérées
     displayRecipes.forEach((recipe) => {
         const recipeCard = createCard(recipe);
         mainContainer.appendChild(recipeCard);
     });
-    document.querySelector(".recipe-number").textContent = displayRecipes.length + " recettes";
-    //mise à jour du nombre de recette
+}
+
+function updateRecipeNumber(count) {
+    // console.log(count);
+    const recipeNumberElement = document.querySelector(".recipe-number");
+    recipeNumberElement.textContent = `${count} recette${count <= 1 ? "" : "s"}`;
 }

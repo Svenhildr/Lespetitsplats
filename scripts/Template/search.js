@@ -12,7 +12,7 @@ export let filteredRecipesUpdate = [];
  */
 export default function mainFilter(recipes) {
     const mainSearchbar = document.getElementById("searchbar");
-    mainSearchbar.addEventListener("input", (event) => {
+    mainSearchbar.addEventListener("change", (event) => {
         event.preventDefault();
         search(recipes);
     });
@@ -25,24 +25,22 @@ export default function mainFilter(recipes) {
  * @param {Array} recipes - An array of recipe objects
  * @returns {void}
  */
-function search(recipes) {
+export function search(recipes) {
     const mainSearchbar = document.getElementById("searchbar");
     let filteredRecipesTemp = filtersList.length === 0 ? recipes : filteredRecipesUpdate;
     filteredRecipesUpdate = [];
     if (mainSearchbar.value.length >= 3) {
-        console.log(mainSearchbar.value);
+        // console.log(mainSearchbar.value);
         filteredRecipesTemp = recipes.filter((recipe) => {
             let recipeNameMatch = recipe.name.toLowerCase().includes(mainSearchbar.value);
             let recipeIngredientsMatch = recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(mainSearchbar.value));
             let recipeDescriptionMatch = recipe.description.toLowerCase().includes(mainSearchbar.value);
             return recipeIngredientsMatch || recipeNameMatch || recipeDescriptionMatch;
         });
+        //assure que les recettes filtrées dans filteredRecipesTemp ne contiennent pas celles qui sont déjà présentes dans filtersList
         filteredRecipesUpdate = filteredRecipesTemp.filter((recipe) => !filtersList.some((existingRecipe) => existingRecipe.id === recipe.id));
     }
-    cardDisplay(filteredRecipesTemp);
-    // const updateEvent = new Event("recipesUpdated");
-    // mainSearchbar.dispatchEvent(updateEvent);
-    filterUpdate(filteredRecipesTemp);
+    filterUpdate(false, true);
 }
 
 /**
@@ -51,12 +49,16 @@ function search(recipes) {
  * @param {boolean} isFilterDelete False by default, pass it to True when you delete a tag
  * @returns {void}
  */
-export function filterUpdate(filteredRecipesTemp, isFilterDelete = false) {
+export function filterUpdate(isFilterDelete = false, isNameSearch = false) {
     let filteredRecipesToUpdate = filteredRecipesUpdate.length === 0 ? recipes : filteredRecipesUpdate;
 
     if (isFilterDelete) {
         //condition pour forcer l'utilisation des "recipes" quand un tag est supprimé
         filteredRecipesToUpdate = recipes;
+    }
+
+    if (!isFilterDelete && isNameSearch) {
+        filteredRecipesToUpdate = filteredRecipesUpdate;
     }
 
     let filteredTagRecipes = filteredRecipesToUpdate.filter((recipe) => {
@@ -73,7 +75,6 @@ export function filterUpdate(filteredRecipesTemp, isFilterDelete = false) {
     });
     filteredRecipesUpdate = filteredTagRecipes;
     cardDisplay(filteredRecipesUpdate);
-    console.log(filteredRecipesUpdate);
 
     const mainSearchbar = document.getElementById("searchbar");
     // Crée un nouvel événement "recipesUpdated"
