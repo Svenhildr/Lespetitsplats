@@ -12,7 +12,7 @@ export let filteredRecipesUpdate = [];
  */
 export default function mainFilter(recipes) {
     const mainSearchbar = document.getElementById("searchbar");
-    mainSearchbar.addEventListener("change", (event) => {
+    mainSearchbar.addEventListener("input", (event) => {
         event.preventDefault();
         search(recipes);
     });
@@ -30,7 +30,6 @@ export function search(recipes) {
     let filteredRecipesTemp = filtersList.length === 0 ? recipes : filteredRecipesUpdate;
     filteredRecipesUpdate = [];
     if (mainSearchbar.value.length >= 3) {
-        // console.log(mainSearchbar.value);
         filteredRecipesTemp = recipes.filter((recipe) => {
             let recipeNameMatch = recipe.name.toLowerCase().includes(mainSearchbar.value);
             let recipeIngredientsMatch = recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(mainSearchbar.value));

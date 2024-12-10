@@ -28,9 +28,9 @@ init();
  * @returns {void}
  */
 export function cardDisplay(displayRecipes) {
-    console.log("cardDisplay call");
     const mainContainer = document.querySelector(".card_container");
     mainContainer.innerHTML = "";
+
     //mise à jour du nombre de recette
     updateRecipeNumber(displayRecipes.length);
     if (displayRecipes.length === 0) {
@@ -40,7 +40,6 @@ export function cardDisplay(displayRecipes) {
         errorMsg.innerHTML = `Aucune recette ne contient « <span style="color: black">${userSearch} </span>» .<br> Vous pouvez chercher « tarte aux pommes », « poisson », etc.`;
         mainContainer.appendChild(errorMsg);
 
-        // "`Aucune recette ne contient XXX. Vous pouvez chercher « tarte aux pommes », « poisson », etc.`;"; // Supprime le texte du nombre de recettes
         return;
     }
     // Crée une carte pour chaque recette dans les données récupérées
@@ -51,7 +50,6 @@ export function cardDisplay(displayRecipes) {
 }
 
 function updateRecipeNumber(count) {
-    // console.log(count);
     const recipeNumberElement = document.querySelector(".recipe-number");
     recipeNumberElement.textContent = `${count} recette${count <= 1 ? "" : "s"}`;
 }
