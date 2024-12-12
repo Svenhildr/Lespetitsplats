@@ -84,5 +84,4 @@ input[type="search"]::-webkit-search-cancel-button {
     font-size: x-large;
     margin: 5% 0;
     width: 50%;
-    /* text-shadow: 3px 3px 0 #000, -3px 3px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000;  */
 }
