@@ -2,9 +2,9 @@ import { cardDisplay } from "./index.js";
 import { filteredRecipesUpdate, filterUpdate, search } from "./Template/search.js";
 export let filtersList = []; //liste des filtres
 
-let ingredientTags = generateTagList(recipes)[0]; //liste des ingrédients
-let applianceTags = generateTagList(recipes)[1]; //liste des appareils
-let ustensilsTags = generateTagList(recipes)[2]; //liste des  ustensils
+let ingredientTags = generateTagList(recipes)[0];
+let applianceTags = generateTagList(recipes)[1];
+let ustensilsTags = generateTagList(recipes)[2];
 const iconElement = document.createElement("i");
 
 /**
@@ -15,9 +15,9 @@ const iconElement = document.createElement("i");
  * @returns {void}
  */
 function generateTagLists(recipesList) {
-    ingredientTags = generateTagList(recipesList)[0]; //liste des ingrédients
-    applianceTags = generateTagList(recipesList)[1]; //liste des appareils
-    ustensilsTags = generateTagList(recipesList)[2]; //liste des  ustensils
+    ingredientTags = generateTagList(recipesList)[0];
+    applianceTags = generateTagList(recipesList)[1];
+    ustensilsTags = generateTagList(recipesList)[2];
 }
 
 /**
@@ -52,9 +52,8 @@ export function generateTagList(recipesList) {
  * @returns {void}
  */
 function onRecipesUpdated() {
-    // Si aucune recette n'est filtrée, utilise la liste complète des recettes, sinon utilise les recettes filtrées
     generateTagLists(filteredRecipesUpdate.length == 0 ? recipes : filteredRecipesUpdate);
-    // Crée et met à jour les tags d'ingrédients, d'appareils et d'ustensiles
+
     createTagList(ingredientTags, "ingredients");
     createTagList(applianceTags, "appliances");
     createTagList(ustensilsTags, "ustensils");
@@ -71,7 +70,6 @@ export function initTags() {
     initTag(ingredientTags, "ingredients");
     initTag(applianceTags, "appliances");
     initTag(ustensilsTags, "ustensils");
-    // Ajoute un listener pour mettre à jour les tags lorsque les recettes sont mises à jour
     document.getElementById("searchbar").addEventListener("recipesUpdated", onRecipesUpdated);
 }
 
@@ -189,7 +187,6 @@ export function addTag() {
         selectedTag.appendChild(iconElement);
         tagContainer.appendChild(selectedTag);
 
-        // Ajoute un écouteur d'événements au clic sur l'icône pour supprimer le tag
         iconElement.addEventListener("click", (e) => closeTag(e, filtersList));
     });
 }
@@ -220,14 +217,12 @@ export function createTagList(tags, nameTag) {
             tagElt.classList.add("hover:bg-chicky-yellow", "ease-in-out", "duration-200", "rounded", "px-2");
             unfilteredList.appendChild(tagElt);
 
-            // Ajoute listener pour ajouter le tag sélectionné
             tagElt.addEventListener("click", (e) => {
                 if (!filtersList.includes(tag)) {
                     filtersList.push(tag);
                 }
                 addTag(filtersList);
                 createTagList(tags, nameTag);
-                // filterUpdate(filteredRecipesUpdate);
                 filterUpdate();
             });
         } else {
@@ -265,9 +260,7 @@ function closeTag(e, filtersList, allRecipes = false) {
         filtersList.splice(index, 1);
     }
     selectedTagElt.remove();
-    // filterUpdate(filtersList, true);
     filterUpdate(true);
-    // search(recipes);
     addTag();
 }
 export default { generateTagList };
