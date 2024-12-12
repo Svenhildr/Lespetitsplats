@@ -12,6 +12,7 @@ import mainFilter from "./Template/search.js";
 function init() {
     //affichage des cartes en fonction des recettes d'origine
     cardDisplay(recipes);
+
     //listener sur input pour tri et affichage des cartes triée
     mainFilter(recipes);
 

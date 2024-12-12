@@ -36,6 +36,7 @@ export function search(recipes) {
             let recipeDescriptionMatch = recipe.description.toLowerCase().includes(mainSearchbar.value);
             return recipeIngredientsMatch || recipeNameMatch || recipeDescriptionMatch;
         });
+
         //assure que les recettes filtrées dans filteredRecipesTemp ne contiennent pas celles qui sont déjà présentes dans filtersList
         filteredRecipesUpdate = filteredRecipesTemp.filter((recipe) => !filtersList.some((existingRecipe) => existingRecipe.id === recipe.id));
     }
@@ -76,8 +77,6 @@ export function filterUpdate(isFilterDelete = false, isNameSearch = false) {
     cardDisplay(filteredRecipesUpdate);
 
     const mainSearchbar = document.getElementById("searchbar");
-    // Crée un nouvel événement "recipesUpdated"
     const updateEvent = new Event("recipesUpdated");
-    // Déclenche l'événement "recipesUpdated" sur la barre de recherche principale
     mainSearchbar.dispatchEvent(updateEvent);
 }
