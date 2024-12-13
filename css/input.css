@@ -1,0 +1,87 @@
+/* index.css */
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+.flex {
+    display: flex;
+}
+.justify-end {
+    justify-content: end;
+}
+
+.overflow-y-scroll {
+    overflow: scroll;
+}
+
+.scrollbar-thin {
+    scrollbar-width: thin;
+}
+
+.scrollbar-thumb {
+    scrollbar-color: white white;
+}
+
+.text-capitalize {
+    text-transform: capitalize;
+}
+
+.truncate {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.recipe {
+    max-height: 75px;
+}
+
+.tagList {
+    display: none;
+}
+
+.tagList.show {
+    display: block;
+}
+
+.open {
+    display: flex;
+}
+
+.fit-content {
+    height: fit-content;
+}
+
+.selected_Tag {
+    padding: 10px;
+}
+.float-left {
+    float: left;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+ul[id^="filtered_"] > li {
+    padding: 0 5px;
+}
+ul[id^="filtered_"] > li > i {
+    padding-top: 4px;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+    padding-right: 30px;
+    color: rgb(87, 82, 82);
+}
+
+.errorMsg {
+    font-size: x-large;
+    margin: 5% 0;
+    width: 50%;
+}

@@ -1,1 +1,8 @@
 .ssh
+
+# Node.js
+node_modules/
+
+# Tailwind CSS
+.cache/
+dist/

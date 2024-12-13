@@ -1,9 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <link rel="stylesheet" href="./css/output.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
+        <title>Les petits plats</title>
+        <script src="https://kit.fontawesome.com/b50abd1df8.js" crossorigin="anonymous"></script>
+        <script src="./data/recipes.js"></script>
+        <script type="module" src="./scripts/index.js"></script>
     </head>
-    <body></body>
+
+    <body class="font-['Manrope'] bg-light-grey">
+        <header class="relative mt-0">
+            <!-- Image de fond -->
+            <div class="background_image absolute top-0 left-0 w-full h-[677px] bg-cover bg-center" style="background-image: url('./assets/Header_BG.jpg')"></div>
+
+            <!-- Logo -->
+            <div class="header_container absolute top-0 h-full w-full flex flex-col">
+                <div class="logo z-10 w-full flex-row p-10 mb-1">
+                    <img src="./assets/Logo.svg" alt="Logo Les petits plats" />
+                </div>
+
+                <!-- Contenu du header -->
+                <div class="header_content w-full h-full flex flex-col items-center text-white z-10 mt-28">
+                    <h1 class="font-['Anton'] leading-relaxed w-full text-center text-5xl text-chicky-yellow tracking-wider font-bold mb-4">
+                        CHERCHEZ PARMI PLUS DE 1500 RECETTES <br />
+                        DU QUOTIDIEN, SIMPLES ET DÉLICIEUSES
+                    </h1>
+                    <div class="header_searchbar relative mt-4 w-1/2">
+                        <form class="header_form flex items-center justify-center">
+                            <input id="searchbar" class="rounded-md py-4 px-6 mr-2 w-full text-light-grey" placeholder="Rechercher une recette, un ingrédient, ..." type="search" />
+                            <div class="main_search_button absolute right-4 py-2 px-3 rounded-md text-white bg-black hover:bg-chicky-yellow ease-in-out duration-300">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- section filtres -->
+        <main class="main_container relative z-20 top-[697px]">
+            <div class="filter-container absolute z-10 flex flex-row justify-start mb-10 ml-28">
+                <div id="ingredients" class="content_dropdown">
+                    <div class="filter_dropdown fit-content rounded-md bg-white w-[210px] h-[300px] px-4 py-2 ml-10 flex flex-col justify-start">
+                        <span class="flex items-center justify-between pb-2 font-medium">
+                            Ingrédients
+                            <i class="dropdown-icon-up dropdown-icon fa-solid fa-chevron-down pl-2"></i>
+                        </span>
+                        <div class="filter_container hidden flex-col justify-between max-h-[538px]">
+                            <div class="searchbar_filter_container relative rounded border-solid border border-light-grey">
+                                <input class="searchbar_input block w-full h-[36px] outline-none" />
+                                <button class="search_button absolute right-1.5 top-1 text-light-grey" type="submit">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
+                            <ul id="filtered_ingredients"></ul>
+                            <ul id="unfiltered_ingredients"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="appliances" class="content_dropdown">
+                    <div class="filter_dropdown fit-content rounded-md bg-white w-[210px] h-[300px] px-4 py-2 ml-10 flex flex-col justify-start">
+                        <span class="flex items-center justify-between pb-2 font-medium">
+                            Appareils
+                            <i class="dropdown-icon-up dropdown-icon fa-solid fa-chevron-down pl-2"></i>
+                        </span>
+                        <div class="filter_container hidden flex-col justify-between max-h-[538px]">
+                            <div class="searchbar_filter_container relative rounded border-solid border border-light-grey">
+                                <input class="searchbar_input block w-full h-[36px] outline-none" />
+                                <button class="search_button absolute right-1.5 top-1 text-light-grey" type="submit">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
+                            <ul id="filtered_appliances"></ul>
+                            <ul id="unfiltered_appliances"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ustensils" class="content_dropdown">
+                    <div class="filter_dropdown fit-content rounded-md bg-white w-[210px] h-[300px] px-4 py-2 ml-10 flex flex-col justify-start">
+                        <span class="flex items-center justify-between pb-2 font-medium">
+                            Ustensiles
+                            <i class="dropdown-icon-up dropdown-icon fa-solid fa-chevron-down pl-2"></i>
+                        </span>
+                        <div class="filter_container hidden flex-col justify-between max-h-[538px]">
+                            <div class="searchbar_filter_container relative rounded border-solid border border-light-grey">
+                                <input class="searchbar_input block w-full h-[36px] outline-none" />
+                                <div class="search_button absolute right-1.5 top-1 text-light-grey">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </div>
+                            <ul id="filtered_ustensils" class="max-h-[250px] flex flex-col gap-1"></ul>
+                            <ul id="unfiltered_ustensils" class="max-h-[250px]"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-number font-['Anton'] text-xl font-bold relative left-1/2 top-3">1500 recettes</div>
+            </div>
+            <div class="tag_container relative top-[70px] ml-28 flex flex-row"></div>
+
+            <!-- section recettes cards -->
+
+            <div class="card_container relative top-12 z-0 flex flex-row flex-wrap justify-center">
+                <template id="recipe_card_template">
+                    <div class="card my-10 w-1/4 bg-white rounded-3xl overflow-hidden ml-20">
+                        <div class="photo_container h-[253px] rounded-3xl mb-8 relative">
+                            <img src="./assets/Recette01.jpg" alt="" class="object-cover w-full h-full" />
+                            <span class="time_buble px-4 py-1 text-[12px] bg-chicky-yellow rounded-3xl absolute top-6 right-6">50 min</span>
+                        </div>
+
+                        <div class="card_info w-full px-7">
+                            <h2 class="card_title mt-7 font-['Anton'] font-extrabold text-lg mb-6"></h2>
+                            <div class="recipe_content">
+                                <h3 class="recipe_title text-xs text-medium-grey font-bold mb-4"></h3>
+                                <p class="recipe text-wrap text-[14px]"></p>
+                            </div>
+                            <div class="ingredients_container mb-12 flex flex-row">
+                                <h3 class="ingredients_title text-xs text-medium-grey font-bold mt-7 mb-4">INGREDIENTS</h3>
+                                <div class="ingredients_content flex flex-col w-full">
+                                    <p class="ingredients_name font-semibold text-[14px]">Lait de coco</p>
+                                    <p class="ingredients_quantity text-[14px] text-medium-grey">400ml</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </main>
+    </body>
 </html>
