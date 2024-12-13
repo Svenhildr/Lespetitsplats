@@ -39,7 +39,10 @@ export function search(recipes) {
 
         //assure que les recettes filtrées dans filteredRecipesTemp ne contiennent pas celles qui sont déjà présentes dans filtersList
         filteredRecipesUpdate = filteredRecipesTemp.filter((recipe) => !filtersList.some((existingRecipe) => existingRecipe.id === recipe.id));
+    } else {
+        filteredRecipesUpdate = filtersList.length === 0 ? recipes : filteredRecipesUpdate;
     }
+
     filterUpdate(false, true);
 }
 
@@ -49,34 +52,35 @@ export function search(recipes) {
  * @param {boolean} isFilterDelete False by default, pass it to True when you delete a tag
  * @returns {void}
  */
+
 export function filterUpdate(isFilterDelete = false, isNameSearch = false) {
-    let filteredRecipesToUpdate = filteredRecipesUpdate.length === 0 ? recipes : filteredRecipesUpdate;
+    const mainSearchbar = document.getElementById("searchbar");
+    const isMainSearchActive = mainSearchbar.value.length >= 3;
+    let filteredRecipesToUpdate;
 
     if (isFilterDelete) {
-        //condition pour forcer l'utilisation des "recipes" quand un tag est supprimé
-        filteredRecipesToUpdate = recipes;
-    }
-
-    if (!isFilterDelete && isNameSearch) {
-        filteredRecipesToUpdate = filteredRecipesUpdate;
+        if (isMainSearchActive) {
+            search(recipes);
+            filteredRecipesToUpdate = filteredRecipesUpdate;
+        } else {
+            filteredRecipesToUpdate = recipes;
+        }
+    } else {
+        filteredRecipesToUpdate = filteredRecipesUpdate.length === 0 ? recipes : filteredRecipesUpdate;
     }
 
     let filteredTagRecipes = filteredRecipesToUpdate.filter((recipe) => {
         return filtersList.every((selectedElement) => {
             let isIngredientMatch = recipe.ingredients.some((item) => item.ingredient.toLowerCase() === selectedElement.toLowerCase());
-
             let isApplianceMatch = recipe.appliance.toLowerCase() === selectedElement.toLowerCase();
-
             let isUstensilMatch = recipe.ustensils.some((ustensil) => ustensil.toLowerCase().includes(selectedElement.toLowerCase()));
-
-            // Retourne vrai si l'élément sélectionné correspond à un ingrédient, un appareil ou un ustensile de la recette
             return isIngredientMatch || isApplianceMatch || isUstensilMatch;
         });
     });
+
     filteredRecipesUpdate = filteredTagRecipes;
     cardDisplay(filteredRecipesUpdate);
 
-    const mainSearchbar = document.getElementById("searchbar");
     const updateEvent = new Event("recipesUpdated");
     mainSearchbar.dispatchEvent(updateEvent);
 }
